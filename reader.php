@@ -26,7 +26,7 @@
         for($i = 0; $i < count($pages); $i++) {
             $url = $baseUrl . $pages[$i];
             //echo $url;
-            echo '<img referrerPolicy="no-referrer" src=">' . $url . '" alt="' . 'Page No. ' . $i . '">';
+            echo '<img src="' . $url . '" alt="' . 'Page No. ' . $i . '">';
         }
     }
     else {
