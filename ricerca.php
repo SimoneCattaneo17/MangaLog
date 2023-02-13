@@ -1,4 +1,9 @@
-<?php
+<html>
+    <head>
+        <meta name="referrer" content="no-referrer" />
+    </head>
+    <body>
+    <?php
     $url = 'https://api.mangadex.org/manga?title=' . str_replace(' ', '%20', $_POST["manga"]);
     $ch = curl_init($url);
 
@@ -34,10 +39,10 @@
     
         $imgFilename = $cover["data"]["attributes"]["fileName"];
 
-        //echo $mangas["data"][$j]["attributes"]["title"]["en"];
-
         $sendUrl = 'chapters.php?Id=' . $mangaId . '&title=' . $mangas["data"][$j]["attributes"]["title"]["en"] . '&cover=' . $coverId;
     
         echo '<a href="' . $sendUrl . '"><img id="' . $mangaId . '" src="https://uploads.mangadex.org/covers/' . $mangaId . '/' . $imgFilename . '.256.jpg" alt="cover art" /></a>';
     }
 ?>
+    </body>
+</html>

@@ -1,4 +1,9 @@
-<?php
+<html>
+    <head>
+        <meta name="referrer" content="no-referrer" />
+    </head>
+    <body>
+    <?php
     if(isset($_GET['Id'])) {
         $Id = $_GET['Id'];
         $title = $_GET['title'];
@@ -19,7 +24,14 @@
         curl_close($ch);
 
         for($i = 0; $i < count($chapters["data"]); $i = $i+1) {
-            echo 'chapter ' . $chapters["data"][$i]["attributes"]["chapter"] . ' ' . $chapters["data"][$i]["attributes"]["title"] . '<br>';
+            $reader = 'reader.php?chapterId=' . $chapters["data"][$i]["id"];
+
+            echo '<a href="' . $reader . '">' . 'chapter ' . $chapters["data"][$i]["attributes"]["chapter"] . ' ' . $chapters["data"][$i]["attributes"]["title"] . '</a>' . '<br>';
         }
     }
+    else {
+        header('Location:index.php');
+    }
 ?>
+    </body>
+</html>
