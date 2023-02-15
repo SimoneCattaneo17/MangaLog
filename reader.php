@@ -22,7 +22,6 @@
         $pages = $chapter["chapter"]["dataSaver"];
 
         $baseUrl = 'https://uploads.mangadex.org/data-saver/' . $hash . '/';
-        //echo 'hash: ' . $hash . '<br>';
         for($i = 0; $i < count($pages); $i++) {
             $url = $baseUrl . $pages[$i];
             //echo $url;
