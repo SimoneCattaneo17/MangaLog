@@ -1,6 +1,7 @@
 <html>
     <head>
         <meta name="referrer" content="no-referrer" />
+        <link rel="stylesheet" href="./CSS/style.css">
     </head>
     <body>
     <?php
@@ -40,8 +41,10 @@
         $imgFilename = $cover["data"]["attributes"]["fileName"];
 
         $sendUrl = 'chapters.php?Id=' . $mangaId . '&title=' . $mangas["data"][$j]["attributes"]["title"]["en"] . '&cover=' . $coverId;
-    
+
+        echo '<div class="left-aligned-image">';
         echo '<a href="' . $sendUrl . '"><img id="' . $mangaId . '" src="https://uploads.mangadex.org/covers/' . $mangaId . '/' . $imgFilename . '.256.jpg" alt="cover art" /></a>';
+        echo '</div>';
     }
 ?>
     </body>

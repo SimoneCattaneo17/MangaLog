@@ -1,6 +1,7 @@
 <html>
     <head>
         <meta name="referrer" content="no-referrer" />
+        <link rel="stylesheet" href="./CSS/style.css">
     </head>
     <body>
     <?php
