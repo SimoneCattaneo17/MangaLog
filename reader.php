@@ -1,9 +1,10 @@
+<!DOCTYPE html>
 <html>
     <head>
         <meta name="referrer" content="no-referrer" />
         <link rel="stylesheet" href="./CSS/style.css">
     </head>
-    <body>
+    <body class="body">
         <?php
         if(isset($_GET['chapterId'])) {
             $chapterId = $_GET['chapterId'];
@@ -26,7 +27,7 @@
             for($i = 0; $i < count($pages); $i++) {
                 $url = $baseUrl . $pages[$i];
                 echo '<div class="divCenter">';
-                echo '<img src="' . $url . '" alt="' . 'Page No. ' . $i . '">';
+                echo '<img class="pages" src="' . $url . '" alt="' . 'Page No. ' . $i . '">';
                 echo '</div>';
             }
         }

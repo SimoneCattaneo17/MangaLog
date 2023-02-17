@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php
     session_start();
 ?>
@@ -14,6 +15,7 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" >
     </head>
     <body class="body">
+        
         <form action="ricerca.php" method="post">
         <div class="container">
             <div class="d-flex justify-content-center">

@@ -1,3 +1,9 @@
+.body{
+    background-color: #121318;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .divCenter{
     display: flex;
     align-items: center;
@@ -5,16 +11,41 @@
     text-align: center;
 }
 
-.divCover{
+.divDati{
     display: flex;
+    height: 256px;
+    border-radius: 10px;
+    background-color: #212328;
+    vertical-align: middle;
 }
 
-img{
+.divCover{
+    display: block;
+    text-align: center;
+    justify-content: center;
+    position: relative;
+    height: 256px;
+    width: 256px;
+}
+
+.divScritte{
+    display: block;
+    padding: 38px   ;
+}
+
+.cover{
+    padding-top: 38px;
+    max-width: 70%;
+    max-height: 70%;
+}
+
+.pages{
     max-width: 50%;
     max-height: 50%;
 }
 
-/* search bar */
+
+/*search bar*/
 
 .search-click {
     border: 1px solid #ccc;

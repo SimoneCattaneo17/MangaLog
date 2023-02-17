@@ -1,9 +1,10 @@
+<!DOCTYPE html>
 <html>
     <head>
         <meta name="referrer" content="no-referrer" />
         <link rel="stylesheet" href="./CSS/style.css">
     </head>
-    <body>
+    <body class="body">
     <?php
     if(isset($_GET['Id'])) {
         $Id = $_GET['Id'];
