@@ -6,15 +6,17 @@
     </head>
     <body class="body">
     <?php
+    $lang = "en"; //default
     if(isset($_GET['Id'])) {
         $Id = $_GET['Id'];
         $title = $_GET['title'];
-        echo '<h2>' . $title . '</h2>' . '<br>';
+        $lang = $_GET['lang'];
+        echo '<h1>' . $title . '</h1>' . '<br>';
         $coverId = $_GET['cover'];
 
         //utilizzare il coverId in qualche modo per mettere l'immagine
 
-        $url = 'https://api.mangadex.org/manga/' . $Id . '/feed?translatedLanguage[]=en&order[volume]=asc&order[chapter]=asc';
+        $url = 'https://api.mangadex.org/manga/' . $Id . '/feed?translatedLanguage[]=' . $lang . '&order[volume]=asc&order[chapter]=asc';
         $ch = curl_init($url);
 
         curl_setopt($ch, CURLOPT_HTTPGET, true);
@@ -25,10 +27,15 @@
 
         curl_close($ch);
 
-        for($i = 0; $i < count($chapters["data"]); $i = $i+1) {
-            $reader = 'reader.php?chapterId=' . $chapters["data"][$i]["id"];
 
-            echo '<a href="' . $reader . '">' . 'chapter ' . $chapters["data"][$i]["attributes"]["chapter"] . ' ' . $chapters["data"][$i]["attributes"]["title"] . '</a>' . '<br>';
+        if(count($chapters["data"]) == 0) {
+            echo '<h3>Nessun capitolo disponibile nella lingua selezionata</h3>';
+        }
+        else {
+            for($i = 0; $i < count($chapters["data"]); $i = $i+1) {
+                $reader = 'reader.php?chapterId=' . $chapters["data"][$i]["id"];
+                echo '<a href="' . $reader . '">' . 'chapter ' . $chapters["data"][$i]["attributes"]["chapter"] . ' ' . $chapters["data"][$i]["attributes"]["title"] . '</a>' . '<br>';
+            }
         }
     }
     else {

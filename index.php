@@ -16,7 +16,7 @@
     </head>
     <body class="body">
         
-        <form action="ricerca.php" method="post">
+        <form action="ricerca.php?offset=0&manga=null&lang=en" method="post">
         <div class="container">
             <div class="d-flex justify-content-center">
                 <div class="searchbar">

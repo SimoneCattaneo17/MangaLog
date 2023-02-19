@@ -30,7 +30,7 @@
 
 .divScritte{
     display: block;
-    padding: 38px   ;
+    padding: 38px;
 }
 
 .cover{
@@ -42,6 +42,18 @@
 .pages{
     max-width: 50%;
     max-height: 50%;
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48
+}
+
+.buttonNextPrev{
+    
 }
 
 

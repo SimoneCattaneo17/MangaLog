@@ -27,8 +27,13 @@
             for($i = 0; $i < count($pages); $i++) {
                 $url = $baseUrl . $pages[$i];
                 echo '<div class="divCenter">';
-                echo '<img class="pages" src="' . $url . '" alt="' . 'Page No. ' . $i . '">';
+                    echo '<img class="pages" src="' . $url . '" alt="' . 'Page No. ' . $i . '">';
                 echo '</div>';
+                echo '<br>';
+                echo '<div class="divCenter">';
+                    echo $i + 1 . '/' . count($pages) + 1;
+                echo '</div>';
+                echo '<br>';
             }
         }
         else {
