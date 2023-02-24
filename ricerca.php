@@ -5,28 +5,15 @@
     <meta name="referrer" content="no-referrer" />
     <link rel="stylesheet" href="./CSS/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="./JavaScript/script.js"></script>
 </head>
 
 <body class="body">
     <!-- magari mettere le lingue in un file che viene letto e le scrive in un select -->
-    <select onchange="fetch_select(this.value)">
+    <select onchange="languageChange()">
         <option value="en">en</option>
         <option value="it">it</option>
     </select>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0 /jquery.min.js"></script>
-    <script type="text/javascript">
-            function fetch_select(val){
-                $.ajax({
-                    type: 'post',
-                    url: 'ajax.php',
-                    datatype:'json',
-                    data: {option:val},
-                    success: function (response) {
-                        $('#print-ajax').html(response);
-                    }
-                });
-            }
-    </script>
     <?php
     $lang = "en";
     if (isset($_GET['offset'])) {
