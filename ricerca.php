@@ -9,12 +9,15 @@
 </head>
 
 <body class="body">
-    <!-- magari mettere le lingue in un file che viene letto e le scrive in un select -->
-    <select onchange="languageChange()">
-        <option value="en">en</option>
-        <option value="it">it</option>
-    </select>
     <?php
+    $lines = file('./languages.txt');
+    echo '<select id="selectLang" onchange="languageChange()">';
+    foreach($lines as $line) {
+        $line = rtrim($line, "\n");
+        echo '<option value="' . $line . '">' . $line . '</option>';
+    }
+    echo '</select>';
+
     $lang = "en";
     if (isset($_GET['offset'])) {
         $offset = $_GET['offset'];
@@ -68,11 +71,11 @@
 
                 //echo $lang;
                 $sendUrl = 'chapters.php?Id=' . $mangaId . '&title=' . $mangas["data"][$j]["attributes"]["title"]["en"] . '&cover=' . $coverId . '&lang=' . $lang;
-                echo $sendUrl;
+                //echo $sendUrl;
 
                 echo '<div class="divDati">';
                 echo '<div class="divCover">';
-                echo '<a href="' . $sendUrl . '"><img class="cover" id="' . $mangaId . '" src="https://uploads.mangadex.org/covers/' . $mangaId . '/' . $imgFilename . '.256.jpg" alt="cover art" /></a>';
+                echo '<a ' . 'id="' . $j . '" href="' . $sendUrl . '"><img class="cover" src="https://uploads.mangadex.org/covers/' . $mangaId . '/' . $imgFilename . '.256.jpg" alt="cover art" /></a>';
                 echo '</div>';
                 echo '<div class="divScritte">';
                 echo $mangas["data"][$j]["attributes"]["title"]["en"] . '<br>';
