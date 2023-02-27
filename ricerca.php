@@ -126,6 +126,7 @@
         header('Location:index.php');
     }
     ?>
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 </body>
 
 </html>
