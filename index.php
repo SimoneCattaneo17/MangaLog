@@ -20,12 +20,12 @@ session_start();
 
     <form action="ricerca.php?offset=0&manga=null&lang=en" method="post">
         <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="index.php">Home</a>
+                                <a class="nav-link" href="#">Home</a>
                             </li>
                             <li class="nav-item">
                                 <div class="input-group mb-3">
