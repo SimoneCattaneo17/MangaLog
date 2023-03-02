@@ -1,8 +1,8 @@
 function languageChange() {
     try {
+        var lang = document.getElementById("selectLang").value;
+        //console.log(lang);
         for (var i = 0; i < 10; i++) {
-            var lang = document.getElementById("selectLang").value;
-            console.log(lang);
             for (var i = 0; i < 10; i++) {
                 var a = document.getElementById(i.toString());
                 var href = a.getAttribute('href');
@@ -18,19 +18,16 @@ function languageChange() {
     }
 }
 
-let mybutton = document.getElementById("myBtn");
-
-window.onscroll = function () { scrollFunction() };
-
-function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        mybutton.style.display = "block";
-    } else {
-        mybutton.style.display = "none";
-    }
-}
-
-function topFunction() {
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+function languageChangeChapter(){
+    console.log("languageChangeChapter");
+    var lang = document.getElementById("selectLangChapter").value;
+    console.log(lang);
+    var url = window.location.href;
+    url.trim();
+    console.log(url);
+    var newUrl = url.substring(0, url.length - 2);
+    console.log(newUrl);
+    newUrl = newUrl + lang;
+    console.log(newUrl);
+    window.location.href = newUrl;
 }
