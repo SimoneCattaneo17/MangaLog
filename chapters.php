@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+    session_start();
+?>
 <html>
 
 <head>
@@ -96,7 +99,7 @@
             $_SESSION['lang'] = $_GET['lang'];
         }
         else {
-            
+            $_SESSION['lang'] = $_GET['lang'];
         }
 
         if (isset($_GET['Id'])) {
@@ -110,7 +113,7 @@
 
         echo '<h1>' . $_SESSION['title'] . '</h1>' . '<br>';
 
-        $url = 'https://api.mangadex.org/manga/' . $_SESSION['Id'] . '/feed?translatedLanguage[]=' . $lang . '&order[volume]=asc&order[chapter]=asc';
+        $url = 'https://api.mangadex.org/manga/' . $_SESSION['Id'] . '/feed?translatedLanguage[]=' . $_SESSION['lang'] . '&order[volume]=asc&order[chapter]=asc';
         $ch = curl_init($url);
 
         curl_setopt($ch, CURLOPT_HTTPGET, true);

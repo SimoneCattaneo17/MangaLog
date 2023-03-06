@@ -89,7 +89,7 @@
                 echo '</div>';
                 echo '<br>';
                 echo '<div class="divCenter">';
-                    echo $i + 1 . '/' . count($pages) + 1;
+                    echo $i + 1 . '/' . count($pages);
                 echo '</div>';
                 echo '<br>';
             }
