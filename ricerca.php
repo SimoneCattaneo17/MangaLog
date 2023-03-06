@@ -15,28 +15,29 @@
 </head>
 
 <body class="body">
-    <form action="ricerca.php?offset=0&manga=null&lang=en" method="post">
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav me-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.php">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control form-control-sm" placeholder="Search..." aria-label="Search" aria-describedby="button-addon2" name="manga" autocomplete="off">
-                                    <button class="btn btn-outline-primary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="random.php">Random</a>
-                            </li>
-                        </ul>
+    <div id="overlay">
+        <form action="ricerca.php?offset=0&manga=null&lang=en" method="post">
+            <header>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav me-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="index.php">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control form-control-sm" placeholder="Search..." aria-label="Search" aria-describedby="button-addon2" name="manga" autocomplete="off">
+                                        <button onclick="loading()" class="btn btn-outline-primary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="chapters.php?search=ok&random=ok&lang=en">Random</a>
+                                </li>
+                            </ul>
 
-                        <ul class="navbar-nav ms-auto">
-                            <?php
+                            <ul class="navbar-nav ms-auto">
+                                <?php
                                 if (isset($_GET['offset'])) {
                                     $lines = file('./languages.txt');
                                     echo '<select id="selectLang" class="form-select" onchange="languageChange()">';
@@ -46,16 +47,23 @@
                                     }
                                     echo '</select>';
                                 }
-                            ?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="logout.php">Logout</a>
-                            </li>
-                        </ul>
+                                ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="logout.php">Logout</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-            </nav>
-        </header>
-    </form>
+                </nav>
+            </header>
+        </form>
+    </div>
+
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div id="loader">
+
+        </div>  
+    </div>
     <?php
 
     $lang = "en";
@@ -118,12 +126,12 @@
                 $imgFilename = $cover["data"]["attributes"]["fileName"];
 
                 //echo $lang;
-                $sendUrl = 'chapters.php?Id=' . $mangaId . '&title=' . $mangas["data"][$j]["attributes"]["title"]["en"] . '&cover=' . $coverId . '&lang=' . $lang;
+                $sendUrl = 'chapters.php?search=ok&Id=' . $mangaId . '&title=' . $mangas["data"][$j]["attributes"]["title"]["en"] . '&cover=' . $coverId . '&lang=' . $lang;
                 //echo $sendUrl;
 
                 echo '<div class="divDati">';
                 echo '<div class="divCover">';
-                echo '<a ' . 'id="' . $j . '" href="' . $sendUrl . '"><img class="cover" src="https://uploads.mangadex.org/covers/' . $mangaId . '/' . $imgFilename . '.256.jpg" alt="cover art" /></a>';
+                echo '<a onclick="loading()" ' . 'id="' . $j . '" href="' . $sendUrl . '"><img class="cover" src="https://uploads.mangadex.org/covers/' . $mangaId . '/' . $imgFilename . '.256.jpg" alt="cover art" /></a>';
                 echo '</div>';
                 echo '<div class="divScritte">';
                 echo $mangas["data"][$j]["attributes"]["title"]["en"] . '<br>';
