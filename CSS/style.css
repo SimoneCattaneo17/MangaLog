@@ -13,9 +13,14 @@
 
 .divDati {
     display: flex;
-    height: 256px;
     border-radius: 10px;
     background-color: #212328;
+    vertical-align: middle;
+}
+
+.divDatiManga {
+    display: flex;
+    height: 256px;
     vertical-align: middle;
 }
 
@@ -28,7 +33,7 @@
     width: 256px;
 }
 
-.divScritte {
+.divScritte .divCapitoli {
     display: block;
     padding: 38px;
 }

@@ -126,7 +126,7 @@
                 $imgFilename = $cover["data"]["attributes"]["fileName"];
 
                 //echo $lang;
-                $sendUrl = 'chapters.php?search=ok&Id=' . $mangaId . '&title=' . $mangas["data"][$j]["attributes"]["title"]["en"] . '&cover=' . $coverId . '&lang=' . $lang;
+                $sendUrl = 'chapters.php?search=ok&Id=' . $mangaId . '&title=' . $mangas["data"][$j]["attributes"]["title"]["en"] . '&cover=' . $imgFilename . '&lang=' . $lang;
                 //echo $sendUrl;
 
                 echo '<div class="divDati">';
@@ -134,8 +134,8 @@
                 echo '<a onclick="loading()" ' . 'id="' . $j . '" href="' . $sendUrl . '"><img class="cover" src="https://uploads.mangadex.org/covers/' . $mangaId . '/' . $imgFilename . '.256.jpg" alt="cover art" /></a>';
                 echo '</div>';
                 echo '<div class="divScritte">';
-                echo $mangas["data"][$j]["attributes"]["title"]["en"] . '<br>';
-                //echo $mangas["data"][$j]["attributes"]["description"]["en"] . '<br>';
+                echo '<h3>' . $mangas["data"][$j]["attributes"]["title"]["en"] . '</h3>' . '<br>';
+                echo substr($mangas["data"][$j]["attributes"]["description"]["en"], 0, 150) . '...' . '<br>';
                 echo '</div>';
                 echo '</div>';
                 echo '<br>';

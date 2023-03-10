@@ -1,3 +1,0 @@
-comandi: https://api.mangadex.org/docs/swagger.html#/
-
-tag generali: api.mangadex.org/manga/tag

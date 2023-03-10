@@ -92,11 +92,24 @@
             $_SESSION['title'] = $manga["data"]["attributes"]["title"]["en"];
             for ($i = 0; $i < count($manga["data"]["relationships"]); $i = $i + 1) {
                 if ($manga["data"]["relationships"][$i]["type"] == "cover_art") {
-                    $_SESSION['coverId'] = $manga["data"]["relationships"][$i]["id"];
+                    $_SESSION['cover'] = $manga["data"]["relationships"][$i]["id"];
                     break;
                 }
             }
             $_SESSION['lang'] = $_GET['lang'];
+
+            $url = 'https://api.mangadex.org/cover/' . $_SESSION['cover'];
+            $ch = curl_init($url);
+
+            curl_setopt($ch, CURLOPT_HTTPGET, true);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+            $response_json = curl_exec($ch);
+            $cover = json_decode($response_json, true);
+
+            curl_close($ch);
+
+            $_SESSION['cover'] = $cover["data"]["attributes"]["fileName"];
         }
         else {
             $_SESSION['lang'] = $_GET['lang'];
@@ -106,32 +119,46 @@
             $_SESSION['Id'] = $_GET['Id'];
             $_SESSION['title'] = $_GET['title'];
             $_SESSION['lang'] = $_GET['lang'];
-            $_SESSION['coverId'] = $_GET['cover'];
+            $_SESSION['cover'] = $_GET['cover'];
 
             //utilizzare il coverId in qualche modo per mettere l'immagine
         }
 
-        echo '<h1>' . $_SESSION['title'] . '</h1>' . '<br>';
+        echo '<div class="divDatiManga">';
 
-        $url = 'https://api.mangadex.org/manga/' . $_SESSION['Id'] . '/feed?translatedLanguage[]=' . $_SESSION['lang'] . '&order[volume]=asc&order[chapter]=asc';
-        $ch = curl_init($url);
+            echo '<div class="divCover">';
 
-        curl_setopt($ch, CURLOPT_HTTPGET, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                echo '<h1>' . $_SESSION['title'] . '</h1>' . '<br>';
 
-        $response_json = curl_exec($ch);
-        $chapters = json_decode($response_json, true);
+                echo '<img class="cover" src="https://uploads.mangadex.org/covers/' . $_SESSION['Id'] . '/' . $_SESSION['cover'] . '.512.jpg" alt="cover art" />';
 
-        curl_close($ch);
+            echo '</div>';
 
-        if (count($chapters["data"]) == 0) {
-            echo '<h3>Nessun capitolo disponibile nella lingua selezionata</h3>';
-        } else {
-            for ($i = 0; $i < count($chapters["data"]); $i = $i + 1) {
-                $reader = 'reader.php?chapterId=' . $chapters["data"][$i]["id"];
-                echo '<a onclick="loading()" href="' . $reader . '">' . 'chapter ' . $chapters["data"][$i]["attributes"]["chapter"] . ' ' . $chapters["data"][$i]["attributes"]["title"] . '</a>' . '<br>';
-            }
-        }
+            $url = 'https://api.mangadex.org/manga/' . $_SESSION['Id'] . '/feed?translatedLanguage[]=' . $_SESSION['lang'] . '&order[volume]=asc&order[chapter]=asc';
+            $ch = curl_init($url);
+
+            curl_setopt($ch, CURLOPT_HTTPGET, true);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+            $response_json = curl_exec($ch);
+            $chapters = json_decode($response_json, true);
+
+            curl_close($ch);
+
+            echo '<div class="divCapitoli">';
+
+                if (count($chapters["data"]) == 0) {
+                    echo 'Nessun capitolo disponibile nella lingua selezionata';
+                } else {
+                    for ($i = 0; $i < count($chapters["data"]); $i = $i + 1) {
+                        $reader = 'reader.php?chapterId=' . $chapters["data"][$i]["id"];
+                        echo '<a onclick="loading()" href="' . $reader . '">' . 'volume ' . $chapters["data"][$i]["attributes"]["volume"] . ' chapter ' . $chapters["data"][$i]["attributes"]["chapter"] . ' ' . $chapters["data"][$i]["attributes"]["title"] . '</a>' . '<br>';
+                    }
+                }
+
+            echo '</div>';
+
+        echo '</div>';
     }
     else {
         header('Location:index.php');
