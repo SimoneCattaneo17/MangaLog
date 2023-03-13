@@ -38,21 +38,6 @@ session_destroy();
                                     <a class="nav-link" href="chapters.php?search=ok&random=ok&lang=en">Random</a>
                                 </li>
                             </ul>
-
-                            <!--
-                        <ul class="navbar-nav ms-auto">
-                            <li class=" nav-item">
-                            <a class="nav-link" href="login.php">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="registrazione.php">Registrati</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="logout.php">Logout</a>
-                            </li>
-                        </ul>
-                        -->
-
                         </div>
                     </div>
                 </nav>

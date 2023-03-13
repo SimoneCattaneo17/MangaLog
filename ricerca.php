@@ -68,16 +68,6 @@
 
     $lang = "en";
     if (isset($_GET['offset'])) {
-        /*
-        $lines = file('./languages.txt');
-        echo '<select id="selectLang" class="form-select" onchange="languageChange()">';
-        foreach ($lines as $line) {
-            $line = rtrim($line, "\n");
-            echo '<option value="' . $line . '">' . $line . '</option>';
-        }
-        echo '</select>';
-        */
-
         $offset = $_GET['offset'];
         $manga = $_GET['manga'];
         if ($manga == "null") {
@@ -125,9 +115,7 @@
 
                 $imgFilename = $cover["data"]["attributes"]["fileName"];
 
-                //echo $lang;
                 $sendUrl = 'chapters.php?search=ok&Id=' . $mangaId . '&title=' . $mangas["data"][$j]["attributes"]["title"]["en"] . '&cover=' . $imgFilename . '&lang=' . $lang;
-                //echo $sendUrl;
 
                 echo '<div class="divDati">';
                 echo '<div class="divCover">';

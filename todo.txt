@@ -1,10 +1,12 @@
+sistemare homepage
+
+sistemare select per la lingua che non si può mettere in inglese
+
 rimuovere il limite alla chiamata per i capitoli o fare piu' pagine come per quando si cerca un manga
 
 sistemare lo spinner per il caricamento
 
 sistemare il bottone per tornare a inizio pagina che non va
-
-
 
 comandi: https://api.mangadex.org/docs/swagger.html#/
 

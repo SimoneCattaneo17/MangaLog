@@ -39,9 +39,3 @@ function loading(){
     document.getElementById("overlay").style.opacity = 0.5;
     document.getElementById("loader").className = "spinner-border";
 }
-
-/*
-document.getElementById("form").addEventListener('submit', (e) => {
-    document.getElementById("overlay").style.opacity = 0.5;
-    document.getElementById("loader").className = "spinner-border";
-}*/
