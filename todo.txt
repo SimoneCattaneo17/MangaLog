@@ -1,9 +1,0 @@
-capire se tenere spinner o no
-
-sistemare homepage
-
-migliorare UI(?)
-
-comandi: https://api.mangadex.org/docs/swagger.html#/
-
-tag generali: api.mangadex.org/manga/tag
