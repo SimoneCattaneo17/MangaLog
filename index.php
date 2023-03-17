@@ -35,7 +35,7 @@ session_destroy();
                                     </div>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="chapters.php?search=ok&random=ok&lang=en">Random</a>
+                                    <a class="nav-link" href="chapters.php?search=ok&random=ok&offset=000&lang=en">Random</a>
                                 </li>
                             </ul>
                         </div>

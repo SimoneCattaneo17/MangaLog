@@ -33,7 +33,7 @@
                                     </div>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="chapters.php?search=ok&random=ok&lang=en">Random</a>
+                                    <a class="nav-link" href="chapters.php?search=ok&random=ok&offset=000&lang=en">Random</a>
                                 </li>
                             </ul>
 
@@ -57,9 +57,11 @@
                                 </script>
                             ';
                                 ?>
+                                <!--
                                 <li class="nav-item">
                                     <a class="nav-link" href="logout.php">Logout</a>
                                 </li>
+                                -->
                             </ul>
                         </div>
                     </div>
@@ -74,19 +76,18 @@
         </div>
     </div>
     <?php
+
+    require __DIR__ . '/functions.php';
+
     $lang = "en"; //default
     if (isset($_GET['search'])) {
+        if(isset($_GET['offset'])){
+            $offset = $_GET['offset'];
+        }
         if (isset($_GET['random']) && $_GET['random'] == 'ok') {
             $url = 'https://api.mangadex.org/manga/random';
-            $ch = curl_init($url);
-
-            curl_setopt($ch, CURLOPT_HTTPGET, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-            $response_json = curl_exec($ch);
-            $manga = json_decode($response_json, true);
-
-            curl_close($ch);
+            
+            $manga = apiCall($url);
 
             $_SESSION['Id'] = $manga["data"]["id"];
             $_SESSION['title'] = $manga["data"]["attributes"]["title"]["en"];
@@ -99,15 +100,8 @@
             $_SESSION['lang'] = $_GET['lang'];
 
             $url = 'https://api.mangadex.org/cover/' . $_SESSION['cover'];
-            $ch = curl_init($url);
-
-            curl_setopt($ch, CURLOPT_HTTPGET, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-            $response_json = curl_exec($ch);
-            $cover = json_decode($response_json, true);
-
-            curl_close($ch);
+            
+            $cover = apiCall($url);
 
             $_SESSION['cover'] = $cover["data"]["attributes"]["fileName"];
         }
@@ -120,8 +114,6 @@
             $_SESSION['title'] = $_GET['title'];
             $_SESSION['lang'] = $_GET['lang'];
             $_SESSION['cover'] = $_GET['cover'];
-
-            //utilizzare il coverId in qualche modo per mettere l'immagine
         }
 
         echo '<div class="divDatiManga">';
@@ -132,18 +124,79 @@
 
                 echo '<img class="cover" src="https://uploads.mangadex.org/covers/' . $_SESSION['Id'] . '/' . $_SESSION['cover'] . '.512.jpg" alt="cover art" />';
 
+            $url = 'https://api.mangadex.org/manga/' . $_SESSION['Id'] . '/feed?translatedLanguage[]=' . $_SESSION['lang'] . '&order[volume]=asc&order[chapter]=asc&offset=' . $offset;
+            
+            $chapters = apiCall($url);
+
+            $total = $chapters['total'];
+            echo '<br>';
+            echo '<div class="divCenter">';
+            if(isset($_GET['random'])) {
+                if ($offset > 0) {
+                    echo '<div>';
+                    echo '<a href="chapters.php?search=ok&random=no&offset=000&lang=' . $_SESSION['lang'] . '">';
+                    echo '<button><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
+                    echo '</a>';
+                    echo '</div>';
+                }
+                if ($offset - 100 >= 0) {
+                    echo '<div>';
+                    echo '<a href="chapters.php?search=ok&random=no&offset=' . $offset - 100 . '&lang=' . $_SESSION['lang'] . '">';
+                    echo '<button><span class="material-symbols-outlined">chevron_left</span></button>';
+                    echo '</a>';
+                    echo '</div>';
+                }
+                if ($offset + 100 < $total) {
+                    echo '<div>';
+                    echo '<a href="chapters.php?search=ok&random=no&offset=' . $offset + 100 . '&lang=' . $_SESSION['lang'] . '">';
+                    echo '<button><span class="material-symbols-outlined">chevron_right</span></button>';
+                    echo '</a>';
+                    echo '</div>';
+                }
+                if ($offset < $total - 100) {
+                    echo '<div>';
+                    echo '<a href="chapters.php?search=ok&random=no&offset=' . $total - 100 . '&lang=' . $_SESSION['lang'] . '">';
+                    echo '<button><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
+                    echo '</a>';
+                    echo '</div>';
+                }
+            }
+            else {
+                $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+                
+                $url = substr($currentUrl, 0, strpos($currentUrl, "offset=")) . "offset=";
+                if ($offset > 0) {
+                    echo '<div>';
+                    echo '<a href="' . $url . "000" . '">';
+                    echo '<button><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
+                    echo '</a>';
+                    echo '</div>';
+                }
+                if ($offset - 100 >= 0) {
+                    echo '<div>';
+                    echo '<a href="' . $url . $offset - 100 . '">';
+                    echo '<button><span class="material-symbols-outlined">chevron_left</span></button>';
+                    echo '</a>';
+                    echo '</div>';
+                }
+                if ($offset + 100 < $total) {
+                    echo '<div>';
+                    echo '<a href="' . $url . $offset + 100 . '">';
+                    echo '<button><span class="material-symbols-outlined">chevron_right</span></button>';
+                    echo '</a>';
+                    echo '</div>';
+                }
+                if ($offset < $total - 100) {
+                    echo '<div>';
+                    echo '<a href="' . $url . $total - 100 . '">';
+                    echo '<button><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
+                    echo '</a>';
+                    echo '</div>';
+                }
+            }
+            echo '<br>';
             echo '</div>';
-
-            $url = 'https://api.mangadex.org/manga/' . $_SESSION['Id'] . '/feed?translatedLanguage[]=' . $_SESSION['lang'] . '&order[volume]=asc&order[chapter]=asc';
-            $ch = curl_init($url);
-
-            curl_setopt($ch, CURLOPT_HTTPGET, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-            $response_json = curl_exec($ch);
-            $chapters = json_decode($response_json, true);
-
-            curl_close($ch);
+            echo '</div>';
 
             echo '<div class="divCapitoli">';
 

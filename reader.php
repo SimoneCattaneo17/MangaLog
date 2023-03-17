@@ -64,19 +64,14 @@
         </div>
     </div>
         <?php
+        require __DIR__ . '/functions.php';
+
         if(isset($_GET['chapterId'])) {
             $chapterId = $_GET['chapterId'];
 
             $url = 'https://api.mangadex.org/at-home/server/' . $chapterId;
-            $ch = curl_init($url);
-
-            curl_setopt($ch, CURLOPT_HTTPGET, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-            $response_json = curl_exec($ch);
-            $chapter=json_decode($response_json, true);
-
-            curl_close($ch);
+            
+            $chapter = apiCall($url);
 
             $hash = $chapter["chapter"]["hash"];
             $pages = $chapter["chapter"]["dataSaver"];

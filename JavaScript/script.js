@@ -1,5 +1,4 @@
-var selectIndex;
-
+var spinnerOn = false;
 function languageChange() {
     try {
         var lang = document.getElementById("selectLang").value;
@@ -24,13 +23,21 @@ function languageChangeChapter(){
     var lang = document.getElementById("selectLangChapter").value;
     var url = window.location.href;
     url.trim();
-    if(url.slice(-17) == 'random=ok&lang=en'){
-        var newUrl = url.substring(0, url.length - 17);
-        newUrl = newUrl + 'random=no&lang=' + lang;
+    console.log(url.slice(-28, -11));
+    if(url.slice(-28, -19) == 'random=ok'){
+        var newUrl = url.substring(0, url.length - 28);
+        newUrl = newUrl + 'random=no&offset=000&lang=' + lang;
     }
     else {
-        var newUrl = url.substring(0, url.length - 2);
-        newUrl = newUrl + lang;
+        if(url.slice(-10, -4) == "offset"){
+            var newUrl = url.substring(0, url.length - 13);
+            var addon = url.substring(url.length - 11);
+            newUrl = newUrl + lang + addon;
+        }
+        else {
+            var newUrl = url.substring(-2);
+            newUrl = newUrl + lang;
+        }
     }
     window.location.href = newUrl;
 }
@@ -38,4 +45,13 @@ function languageChangeChapter(){
 function loading(){
     document.getElementById("overlay").style.opacity = 0.5;
     document.getElementById("loader").className = "spinner-border";
+    spinnerOn = true;
+}
+
+function pageLoad(){
+    if(spinnerOn){
+        document.getElementById("overlay").style.opacity = 0;
+        document.getElementById("loader").className = "";
+        spinnerOn = false;
+    }
 }
