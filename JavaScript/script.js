@@ -2,13 +2,18 @@ var spinnerOn = false;
 function languageChange() {
     try {
         var lang = document.getElementById("selectLang").value;
+        lang = lang.trim();
         for (var i = 0; i < 10; i++) {
             for (var i = 0; i < 10; i++) {
                 var a = document.getElementById(i.toString());
                 var href = a.getAttribute('href');
                 href = href.trim();
-                var newHref = href.substring(0, href.length - 2);
-                newHref = newHref + lang;
+                var newHref = href.substring(0, href.length - 13);
+                newHref = newHref.trim();
+                var addon = href.substring(href.length - 11);
+                addon = addon.trim();
+                newHref = newHref + lang + addon;
+                newHref = newHref.trim();
                 a.setAttribute('href', newHref);
             }
         }
@@ -23,7 +28,6 @@ function languageChangeChapter(){
     var lang = document.getElementById("selectLangChapter").value;
     var url = window.location.href;
     url.trim();
-    console.log(url.slice(-28, -11));
     if(url.slice(-28, -19) == 'random=ok'){
         var newUrl = url.substring(0, url.length - 28);
         newUrl = newUrl + 'random=no&offset=000&lang=' + lang;
@@ -35,13 +39,14 @@ function languageChangeChapter(){
             newUrl = newUrl + lang + addon;
         }
         else {
-            var newUrl = url.substring(-2);
+            var newUrl = url.substring(0, url.length - 2);
             newUrl = newUrl + lang;
         }
     }
     window.location.href = newUrl;
 }
 
+/*
 function loading(){
     document.getElementById("overlay").style.opacity = 0.5;
     document.getElementById("loader").className = "spinner-border";
@@ -55,3 +60,4 @@ function pageLoad(){
         spinnerOn = false;
     }
 }
+*/
