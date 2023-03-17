@@ -14,11 +14,13 @@ session_destroy();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+
+    <link rel="icon" href="./IMG/icon.jpg">
 </head>
 
 <body class="body" id="body">
 
-    <div id="overlay">
+    <div>
         <form id="form" action="ricerca.php?offset=0&manga=null&lang=en" method="post">
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -43,16 +45,41 @@ session_destroy();
                 </nav>
             </header>
         </form>
-    </div>
 
-    <div class="h-100 d-flex align-items-center justify-content-center">
-        <div id="loader">
-
+        <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center">
+                <h1>
+                    MangaLog
+                </h1>
+            </div>
+            <br>
+        </div>
+        <div class="d-flex justify-content-center">
+            <img src="./IMG/icon.jpg" style="width: 20%; height: 20%">
+        </div>
+        <div class="d-flex justify-content-center">
+            <h4>
+                Search and read your favorite mangas<br>
+            </h4>
         </div>
     </div>
-
-    <!-- aggiungere il bottone per un manga casuale -->
-    <!-- https://api.mangadex.org/manga/random -->
+    
+    <footer style="top: 90%;">
+        <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center">
+                <h6>
+                    Made by <a href="https://github.com/SimoneCattaneo17">Simone Cattaneo</a>
+                </h6>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center">
+                <h6>
+                    Credits <a href="https://api.mangadex.org">Mangadex Api</a>
+                </h6>
+            </div>
+        </div>
+    </footer>
 
     <script src="./JavaScript/script.js"></script>
 </body>

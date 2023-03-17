@@ -12,10 +12,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+
+    <link rel="icon" href="./IMG/icon.jpg">
 </head>
 
 <body class="body">
-    <div id="overlay">
+    <div>
         <form action="ricerca.php?offset=0&manga=null&lang=en" method="post">
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -48,7 +50,7 @@
                                     echo '</select>';
                                 }
                                 ?>
-                                <!--
+                                <!-- needed later
                                 <li class="nav-item">
                                     <a class="nav-link" href="logout.php">Logout</a>
                                 </li>
@@ -59,12 +61,6 @@
                 </nav>
             </header>
         </form>
-    </div>
-
-    <div class="h-100 d-flex align-items-center justify-content-center">
-        <div id="loader">
-
-        </div>  
     </div>
     <?php
 
