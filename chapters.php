@@ -120,7 +120,8 @@
 
                 echo '<img class="cover" src="https://uploads.mangadex.org/covers/' . $_SESSION['Id'] . '/' . $_SESSION['cover'] . '.512.jpg" alt="cover art" />';
 
-            $url = 'https://api.mangadex.org/manga/' . $_SESSION['Id'] . '/feed?translatedLanguage[]=' . $_SESSION['lang'] . '&order[volume]=asc&order[chapter]=asc&offset=' . $offset;
+                $url = 'https://api.mangadex.org/manga/' . $_SESSION['Id'] . '/feed
+                        ?translatedLanguage[]=' . $_SESSION['lang'] . '&order[volume]=asc&order[chapter]=asc&offset=' . $offset;
             
             $chapters = apiCall($url);
 

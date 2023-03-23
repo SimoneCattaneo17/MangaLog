@@ -9,10 +9,12 @@ function apiCall($url){
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
     $response_json = curl_exec($ch);
-    $cover = json_decode($response_json, true);
+    $result = json_decode($response_json, true);
 
     curl_close($ch);
 
-    return $cover;
+    return $result;
 }
 ?>
+
+
