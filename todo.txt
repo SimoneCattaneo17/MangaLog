@@ -1,0 +1,11 @@
+ricerca via tag
+possibilità di cambiare tema, sia del sito che del lettore singolarmente
+
+novità: vedere se mangadex da la possibilità
+
+users: dopo aver creato api in tps
+bookmark: dopo users
+notifiche: via mail dopo api
+
+lettura offline
+commenti

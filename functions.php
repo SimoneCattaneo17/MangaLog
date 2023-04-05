@@ -2,7 +2,7 @@
 
 use LDAP\Result;
 
-function apiCall($url){
+function apiCall(string $url): array {
     $ch = curl_init($url);
 
     curl_setopt($ch, CURLOPT_HTTPGET, true);
@@ -13,8 +13,10 @@ function apiCall($url){
 
     curl_close($ch);
 
+    if ($result === null) {
+        $result = array('status' => 'error');
+    }
+
     return $result;
 }
 ?>
-
-

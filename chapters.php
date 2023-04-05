@@ -120,8 +120,7 @@
 
                 echo '<img class="cover" src="https://uploads.mangadex.org/covers/' . $_SESSION['Id'] . '/' . $_SESSION['cover'] . '.512.jpg" alt="cover art" />';
 
-                $url = 'https://api.mangadex.org/manga/' . $_SESSION['Id'] . '/feed
-                        ?translatedLanguage[]=' . $_SESSION['lang'] . '&order[volume]=asc&order[chapter]=asc&offset=' . $offset;
+                $url = 'https://api.mangadex.org/manga/' . $_SESSION['Id'] . '/feed?translatedLanguage[]=' . $_SESSION['lang'] . '&order[volume]=asc&order[chapter]=asc&offset=' . $offset;
             
             $chapters = apiCall($url);
 
@@ -199,7 +198,8 @@
 
                 if (count($chapters["data"]) == 0) {
                     echo 'Nessun capitolo disponibile nella lingua selezionata';
-                } else {
+                } 
+                else {
                     for ($i = 0; $i < count($chapters["data"]); $i = $i + 1) {
                         $reader = 'reader.php?chapterId=' . $chapters["data"][$i]["id"];
                         echo '<a onclick="loading()" href="' . $reader . '">' . 'volume ' . $chapters["data"][$i]["attributes"]["volume"] . ' chapter ' . $chapters["data"][$i]["attributes"]["chapter"] . ' ' . $chapters["data"][$i]["attributes"]["title"] . '</a>' . '<br>';
