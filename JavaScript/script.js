@@ -64,6 +64,6 @@ function pageLoad(){
 
 document.getElementById("first").addEventListener("click", ()=>{
     $.ajax({
-        url: 
+        
     })
 });
