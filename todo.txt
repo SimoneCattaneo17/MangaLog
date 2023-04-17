@@ -1,11 +1,26 @@
 ricerca via tag
-possibilità di cambiare tema, sia del sito che del lettore singolarmente
 
-novità: vedere se mangadex da la possibilità
+novità: vedere se mangadex da la possibilità di mostrare capitoli appena caricati
 
-users: dopo aver creato api in tps
-bookmark: dopo users
-notifiche: via mail dopo api
+users: dopo aver creato api
+bookmark: dopo users, vedere se è possibile salvare il punto in cui si è lasciato il manga
 
-lettura offline
-commenti
+notifiche: via mail dopo api se trovo il modo di avere le novità
+
+lettura offline: vedere se è possibile scaricare i capitoli e salvarli in locale
+commenti: dopo api perchè quelli di mangadex non sono accessibili da api (sembra), possibile mettere il link ai commenti di mangadex e allo stesso tempo mostrare quelli miei
+
+possibilità di fare la ricerca anche senza essere loggati ma senza poter leggere i capitoli
+
+
+
+
+
+demographic (optional) - The demographic of the manga. This can be one of the following values: shounen, shoujo, josei, seinen, kodomo, or doujinshi. (default: all): publicationDemographic[]="string"
+
+tags (optional) - A list of tags to filter the manga by. This can be any of the following values: action, adventure, cars, comedy, dementia, demons, drama, ecchi, fantasy, game, harem, hentai, historical, horror, josei, kids, magic, martial arts, mecha, military, music, mystery, parody, police, psychological, romance, samurai, school, sci fi, seinen, shoujo, shoujo ai, shounen, shounen ai, slice of life, space, sports, super power, supernatural, thriller, vampire, yaoi, yuri, harem, slice of life, supernatural, military, police, psychological, thriller, seinen, josei, kids, doujinshi, drama, fantasy, game, historical, horror, magic, mystery, romance, school, sci fi, shoujo, shounen, space, sports, super power, vampire, yaoi, yuri, action, adventure, cars, comedy, dementia, demons, ecchi, martial arts, mecha, music, parody, psychological, samurai, slice of life, supernatural, thriller, vampire, yaoi, yuri, harem, slice of life, supernatural, military, police, psychological, thriller, seinen, josei, kids, doujinshi, drama, fantasy, game, historical, horror, magic, mystery, romance, school, sci fi, shoujo, shounen, space, sports, super power, vampire, yaoi, yuri, action, adventure, cars, comedy, dementia, demons, drama, ecchi, fantasy, game, harem, hentai, historical, horror, josei, kids, magic, martial arts, mecha, military, music, mystery, parody, police, psychological, romance, samurai, school, sci fi, seinen, shoujo, shoujo ai, shounen, shounen ai, slice of life, space, sports, super power, supernatural, thriller, vampire, yaoi, yuri, action, adventure, cars, comedy, dementia, demons, drama, ecchi, fantasy, game, harem, hentai, historical, horror, josei, kids, magic, martial arts, mecha, military, music, mystery, parody, police, psychological, romance, samurai, school, sci fi, seinen
+    need to request all tags and then filter by the ones that are chosen by the user, when a tag is found get his id and use it in the api call
+
+
+anime quotes api: https://animechan.vercel.app/docs
+anime news: https://kitsu.docs.apiary.io/#reference/anime/news/get-news

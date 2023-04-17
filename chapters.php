@@ -114,6 +114,7 @@
 
         echo '<div class="divDatiManga">';
 
+            //cover
             echo '<div class="divCover">';
 
                 echo '<h1>' . $_SESSION['title'] . '</h1>' . '<br>';
@@ -126,33 +127,35 @@
 
             $total = $chapters['total'];
             echo '<br>';
+
+            //bottoni cambio pagina
             echo '<div class="divCenter" style="padding-top: 10%">';
             if(isset($_GET['random'])) {
                 if ($offset > 0) {
                     echo '<div>';
                     echo '<a href="chapters.php?search=ok&random=no&offset=000&lang=' . $_SESSION['lang'] . '">';
-                    echo '<button><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
+                    echo '<button id="first"><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
                     echo '</a>';
                     echo '</div>';
                 }
                 if ($offset - 100 >= 0) {
                     echo '<div>';
                     echo '<a href="chapters.php?search=ok&random=no&offset=' . $offset - 100 . '&lang=' . $_SESSION['lang'] . '">';
-                    echo '<button><span class="material-symbols-outlined">chevron_left</span></button>';
+                    echo '<button id="previous"><span class="material-symbols-outlined">chevron_left</span></button>';
                     echo '</a>';
                     echo '</div>';
                 }
                 if ($offset + 100 < $total) {
                     echo '<div>';
                     echo '<a href="chapters.php?search=ok&random=no&offset=' . $offset + 100 . '&lang=' . $_SESSION['lang'] . '">';
-                    echo '<button><span class="material-symbols-outlined">chevron_right</span></button>';
+                    echo '<button id="next"><span class="material-symbols-outlined">chevron_right</span></button>';
                     echo '</a>';
                     echo '</div>';
                 }
                 if ($offset < $total - 100) {
                     echo '<div>';
                     echo '<a href="chapters.php?search=ok&random=no&offset=' . $total - 100 . '&lang=' . $_SESSION['lang'] . '">';
-                    echo '<button><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
+                    echo '<button id="last"><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
                     echo '</a>';
                     echo '</div>';
                 }
@@ -164,28 +167,28 @@
                 if ($offset > 0) {
                     echo '<div>';
                     echo '<a href="' . $url . "000" . '">';
-                    echo '<button><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
+                    echo '<button id="first"><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
                     echo '</a>';
                     echo '</div>';
                 }
                 if ($offset - 100 >= 0) {
                     echo '<div>';
                     echo '<a href="' . $url . $offset - 100 . '">';
-                    echo '<button><span class="material-symbols-outlined">chevron_left</span></button>';
+                    echo '<button id="previous"><span class="material-symbols-outlined">chevron_left</span></button>';
                     echo '</a>';
                     echo '</div>';
                 }
                 if ($offset + 100 < $total) {
                     echo '<div>';
                     echo '<a href="' . $url . $offset + 100 . '">';
-                    echo '<button><span class="material-symbols-outlined">chevron_right</span></button>';
+                    echo '<button id="next"><span class="material-symbols-outlined">chevron_right</span></button>';
                     echo '</a>';
                     echo '</div>';
                 }
                 if ($offset < $total - 100) {
                     echo '<div>';
                     echo '<a href="' . $url . $total - 100 . '">';
-                    echo '<button><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
+                    echo '<button id="last"><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
                     echo '</a>';
                     echo '</div>';
                 }
@@ -194,6 +197,7 @@
             echo '</div>';
             echo '</div>';
 
+            //capitoli
             echo '<div class="divCapitoli">';
 
                 if (count($chapters["data"]) == 0) {
