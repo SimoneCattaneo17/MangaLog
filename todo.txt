@@ -1,11 +1,16 @@
+query lock: https://stackoverflow.com/questions/12179290/lock-mysql-table-with-php
+authentication (session/cookie): https://stackoverflow.com/questions/41921048/how-to-authenticate-securely-by-session-tokens-and-cookies-updated
+filter_var: nel login - https://www.stechies.com/php-filtervar/#:~:text=filter_var()%20is%20a%20PHP,email%20id%2C%20IP%20address%20etc.
+prepared statement: https://www.php.net/manual/en/mysqli.quickstart.prepared-statements.php
+
 ricerca via tag
 
 novità: vedere se mangadex da la possibilità di mostrare capitoli appena caricati
 
-users: dopo aver creato api
-bookmark: dopo users, vedere se è possibile salvare il punto in cui si è lasciato il manga
+users
+bookmark
 
-notifiche: via mail dopo api se trovo il modo di avere le novità
+notifiche: via mail se trovo il modo di avere le novità
 
 lettura offline: vedere se è possibile scaricare i capitoli e salvarli in locale
 commenti: dopo api perchè quelli di mangadex non sono accessibili da api (sembra), possibile mettere il link ai commenti di mangadex e allo stesso tempo mostrare quelli miei

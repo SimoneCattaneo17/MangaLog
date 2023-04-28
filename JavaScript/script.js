@@ -1,4 +1,5 @@
 var spinnerOn = false;
+var offset = 0;
 function languageChange() {
     try {
         var lang = document.getElementById("selectLang").value;
@@ -64,6 +65,17 @@ function pageLoad(){
 
 document.getElementById("first").addEventListener("click", ()=>{
     $.ajax({
-        
-    })
+        type: "GET",
+        url: "./ajax.php",
+        data: "data",
+        dataType: "json",
+        success: function (response) {
+            div = document.getElementById("capitoli");
+            div.innerHTML = "";
+            div.innerHTML = response.data[0].id;
+        },
+        error: function (response) {
+            console.log('error');
+        }
+    });
 });

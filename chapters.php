@@ -8,13 +8,14 @@
     <meta name="referrer" content="no-referrer" />
     <link rel="stylesheet" href="./CSS/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <script src="./JavaScript/script.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
 
     <link rel="icon" href="./IMG/icon.jpg">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body class="body">
@@ -79,6 +80,7 @@
     if (isset($_GET['search'])) {
         if(isset($_GET['offset'])){
             $offset = $_GET['offset'];
+            $_SESSION['offset'] = $offset;
         }
         if (isset($_GET['random']) && $_GET['random'] == 'ok') {
             $url = 'https://api.mangadex.org/manga/random';
@@ -166,9 +168,9 @@
                 $url = substr($currentUrl, 0, strpos($currentUrl, "offset=")) . "offset=";
                 if ($offset > 0) {
                     echo '<div>';
-                    echo '<a href="' . $url . "000" . '">';
+                    //echo '<a href="' . $url . "000" . '">';
                     echo '<button id="first"><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
-                    echo '</a>';
+                    //echo '</a>';
                     echo '</div>';
                 }
                 if ($offset - 100 >= 0) {
@@ -198,7 +200,7 @@
             echo '</div>';
 
             //capitoli
-            echo '<div class="divCapitoli">';
+            echo '<div class="divCapitoli" id="capitoli">';
 
                 if (count($chapters["data"]) == 0) {
                     echo 'Nessun capitolo disponibile nella lingua selezionata';
@@ -218,6 +220,8 @@
         header('Location:index.php');
     }
     ?>
+
+<script src="./JavaScript/script.js"></script>
 </body>
 
 </html>
