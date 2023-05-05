@@ -78,6 +78,8 @@ function dataLoad(response) {
         for(var i = 0; i < mangas.data[i].relationships.length; i++){
             if(mangas.data[j].relationships[i].type == "cover_art"){
                 coverId = mangas.data[j].relationships[i].id;
+                console.log(coverId);
+                break;
             }
         }
         mangaId = mangas.data[j].id;
