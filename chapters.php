@@ -123,78 +123,33 @@
 
                 echo '<img class="cover" src="https://uploads.mangadex.org/covers/' . $_SESSION['Id'] . '/' . $_SESSION['cover'] . '.512.jpg" alt="cover art" />';
 
-                $url = 'https://api.mangadex.org/manga/' . $_SESSION['Id'] . '/feed?translatedLanguage[]=' . $_SESSION['lang'] . '&order[volume]=asc&order[chapter]=asc&offset=' . $offset;
+                $url = 'https://api.mangadex.org/manga/' . $_SESSION['Id'] . '/feed?translatedLanguage[]=' . $_SESSION['lang'] . '&order[volume]=asc&order[chapter]=asc&offset=' . $_SESSION['offset'];
             
             $chapters = apiCall($url);
 
             $total = $chapters['total'];
+            $_SESSION['total'] = $total;
             echo '<br>';
 
             //bottoni cambio pagina
             echo '<div class="divCenter" style="padding-top: 10%">';
-            if(isset($_GET['random'])) {
-                if ($offset > 0) {
-                    echo '<div>';
-                    echo '<a href="chapters.php?search=ok&random=no&offset=000&lang=' . $_SESSION['lang'] . '">';
-                    echo '<button id="first"><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
-                    echo '</a>';
-                    echo '</div>';
-                }
-                if ($offset - 100 >= 0) {
-                    echo '<div>';
-                    echo '<a href="chapters.php?search=ok&random=no&offset=' . $offset - 100 . '&lang=' . $_SESSION['lang'] . '">';
-                    echo '<button id="previous"><span class="material-symbols-outlined">chevron_left</span></button>';
-                    echo '</a>';
-                    echo '</div>';
-                }
-                if ($offset + 100 < $total) {
-                    echo '<div>';
-                    echo '<a href="chapters.php?search=ok&random=no&offset=' . $offset + 100 . '&lang=' . $_SESSION['lang'] . '">';
-                    echo '<button id="next"><span class="material-symbols-outlined">chevron_right</span></button>';
-                    echo '</a>';
-                    echo '</div>';
-                }
-                if ($offset < $total - 100) {
-                    echo '<div>';
-                    echo '<a href="chapters.php?search=ok&random=no&offset=' . $total - 100 . '&lang=' . $_SESSION['lang'] . '">';
-                    echo '<button id="last"><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
-                    echo '</a>';
-                    echo '</div>';
-                }
-            }
-            else {
-                $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-                
-                $url = substr($currentUrl, 0, strpos($currentUrl, "offset=")) . "offset=";
-                if ($offset > 0) {
-                    echo '<div>';
-                    //echo '<a href="' . $url . "000" . '">';
-                    echo '<button id="first"><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
-                    //echo '</a>';
-                    echo '</div>';
-                }
-                if ($offset - 100 >= 0) {
-                    echo '<div>';
-                    echo '<a href="' . $url . $offset - 100 . '">';
-                    echo '<button id="previous"><span class="material-symbols-outlined">chevron_left</span></button>';
-                    echo '</a>';
-                    echo '</div>';
-                }
-                if ($offset + 100 < $total) {
-                    echo '<div>';
-                    echo '<a href="' . $url . $offset + 100 . '">';
-                    echo '<button id="next"><span class="material-symbols-outlined">chevron_right</span></button>';
-                    echo '</a>';
-                    echo '</div>';
-                }
-                if ($offset < $total - 100) {
-                    echo '<div>';
-                    echo '<a href="' . $url . $total - 100 . '">';
-                    echo '<button id="last"><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
-                    echo '</a>';
-                    echo '</div>';
-                }
-            }
+
+            echo '<div>';
+            echo '<button onclick="changePage(1)" id="first" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
+            echo '</div>';
+
+            echo '<div>';
+            echo '<button onclick="changePage(2)" id="previous" style="display: block;"><span class="material-symbols-outlined">chevron_left</span></button>';
+            echo '</div>';
+
+            echo '<div>';
+            echo '<button onclick="changePage(3)" id="next" style="display: block;"><span class="material-symbols-outlined">chevron_right</span></button>';
+            echo '</div>';
+
+            echo '<div>';
+            echo '<button onclick="changePage(4)" id="last" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
+            echo '</div>';
+
             echo '<br>';
             echo '</div>';
             echo '</div>';
