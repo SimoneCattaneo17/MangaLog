@@ -68,7 +68,7 @@ function pageLoad(){
 }
 */
 
-function dataLoad(response) {
+async function dataLoad(response) {
     console.log(response);
     mangas = response;
     for(var h = 0; h < mangas.data.length; h++){
@@ -78,12 +78,12 @@ function dataLoad(response) {
         for(var i = 0; i < mangas.data[i].relationships.length; i++){
             if(mangas.data[j].relationships[i].type == "cover_art"){
                 coverId = mangas.data[j].relationships[i].id;
-                console.log(coverId);
                 break;
             }
         }
         mangaId = mangas.data[j].id;
-        $.ajax({
+        console.log('prima di await');
+        await $.ajax({
             type: "POST",
             url: "./ajaxCovers.php",
             data: {
@@ -92,26 +92,27 @@ function dataLoad(response) {
             dataType: "json",
             success: function (response) {
                 console.log(j);
-                console.log(response);
+                //console.log(response);
                 cover = response;
-                var imgFilename = response.data.attributes.fileName;
+                var imgFilename = cover.data.attributes.fileName;
                 var sendUrl = 'chapters.php?search=ok&Id=' + mangaId + '&title=' + mangas.data[j].attributes.title.en + '&cover=' + imgFilename + '&lang=en&offset=000';
                 var container = document.getElementById("container");
-                container.innerHTML += '<div class="divDati" id="divDati">';
-                container.innerHTML += '<div class="divCover" id="divCover">';
-                container.innerHTML += '<a onclick="loading()" ' + 'id="' + j + '" href="' + sendUrl + '"><img class="cover" src="https://uploads.mangadex.org/covers/' + mangaId + '/' + imgFilename + '.256.jpg" alt="cover art" /></a>';
-                container.innerHTML += '</div>';
-                container.innerHTML += '<div class="divScritte" id="divScritte">';
-                container.innerHTML += '<h3>' + mangas.data[j].attributes.title.en + '</h3>' + '<br>';
-                if(mangas.data[j].attributes.description.en !== null){
-                    container.innerHTML += mangas.data[j].attributes.description.en.slice(0, 150) + '...' + '<br>';
+                container.innerHTML += '<div class="divDati" id="divDati' + j + '">';
+                document.getElementById("divDati" + j).innerHTML += '<div class="divCover" id="divCover' + j + '">';
+                document.getElementById("divCover" + j).innerHTML += '<a onclick="loading()" ' + 'id="' + j + '" href="' + sendUrl + '"><img class="cover" src="https://uploads.mangadex.org/covers/' + mangaId + '/' + imgFilename + '.256.jpg" alt="cover art" /></a>';
+                document.getElementById("divDati" + j).innerHTML += '</div>';
+                document.getElementById("divDati" + j).innerHTML += '<div class="divScritte" id="divScritte' + j + '">';
+                document.getElementById("divScritte" + j).innerHTML += '<h3>' + mangas.data[j].attributes.title.en + '</h3>' + '<br>';
+                if(mangas.data[j].attributes.description.en !== null && mangas.data[j].attributes.description.en !== undefined){
+                    document.getElementById("divScritte" + j).innerHTML += mangas.data[j].attributes.description.en.slice(0, 150) + '...' + '<br>';
                 }
                 else {
-                    container.innerHTML += 'No description available';
+                    document.getElementById("divScritte" + j).innerHTML += 'No description available' + '<br>';
                 }
+                document.getElementById("divDati" + j).innerHTML += '<br>';
+                document.getElementById("divDati" + j).innerHTML += '</div>';
                 container.innerHTML += '</div>';
-                container.innerHTML += '</div>';
-                container.innerHTML += '<br>'
+                container.innerHTML += '\n<br>'
             },
             error: function (response) {
                 console.log(response);
@@ -148,10 +149,12 @@ function changePage(id){
         },
         dataType: "json",
         success: function (response) {
-            div = document.getElementById("capitoli");
-            div.innerHTML = "";
-            for(var i = 0; i < response.data.length; i++){
-                div.innerHTML += "<a href='./reader.php?chapterId=" + response.data[i].id + "'> volume " + response.data[i].attributes.volume + " chapter " + response.data[i].attributes.chapter + " " + response.data[i].attributes.title + "</a><br>";
+            if(response.data.length > 100) {
+                div = document.getElementById("capitoli");
+                div.innerHTML = "";
+                for(var i = 0; i < response.data.length; i++){
+                    div.innerHTML += "<a href='./reader.php?chapterId=" + response.data[i].id + "'> volume " + response.data[i].attributes.volume + " chapter " + response.data[i].attributes.chapter + " " + response.data[i].attributes.title + "</a><br>";
+                }
             }
         },
         error: function (response) {

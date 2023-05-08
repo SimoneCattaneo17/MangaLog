@@ -18,7 +18,7 @@
             }
             break;
         case '3':
-            if($_SESSION['offset'] < $_SESSION['total'] - 100){
+            if($_SESSION['offset'] < $_SESSION['total'] - 100 && $_SESSION['total'] > 100){
                 $_SESSION['offset'] = $_SESSION['offset'] + 100;
             }
             else {

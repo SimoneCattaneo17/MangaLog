@@ -94,21 +94,21 @@
         } 
         else {
             echo '<div class="divCenter">';
-            echo '<div>';
-                echo '<button onclick="pclick(1)" id="firstPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
-            echo '</div>';
-            
-            echo '<div>';
-                echo '<button onclick="pclick(2)" id="previousPage" style="display: block;"><span class="material-symbols-outlined">chevron_left</span></button>';
-            echo '</div>';
+                echo '<div>';
+                    echo '<button onclick="pclick(1)" id="firstPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
+                echo '</div>';
 
-            echo '<div>';
-                echo '<button onclick="pclick(3)" id="nextPage" style="display: block;"><span class="material-symbols-outlined">chevron_right</span></button>';
-            echo '</div>';
+                echo '<div>';
+                    echo '<button onclick="pclick(2)" id="previousPage" style="display: block;"><span class="material-symbols-outlined">chevron_left</span></button>';
+                echo '</div>';
 
-            echo '<div>';
-                echo '<button onclick="pclick(4)" id="lastPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
-            echo '</div>';
+                echo '<div>';
+                    echo '<button onclick="pclick(3)" id="nextPage" style="display: block;"><span class="material-symbols-outlined">chevron_right</span></button>';
+                echo '</div>';
+
+                echo '<div>';
+                    echo '<button onclick="pclick(4)" id="lastPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
+                echo '</div>';
             echo '</div>';
             echo '<div id="container">';
             for ($j = 0; $j < count($mangas["data"]); $j = $j + 1) {
@@ -135,7 +135,7 @@
 
                 echo '<div class="divScritte" id="divScritte">';
                 echo '<h3>' . $mangas["data"][$j]["attributes"]["title"]["en"] . '</h3>' . '<br>';
-                if(isset($mangas["data"][$j]["attributes"]["description"]["en"])) {
+                if(isset($mangas["data"][$j]["attributes"]["description"]["en"]) && $mangas["data"][$j]["attributes"]["description"]["en"] != "") {
                     echo substr($mangas["data"][$j]["attributes"]["description"]["en"], 0, 150) . '...' . '<br>';
                 }
                 else {
@@ -145,35 +145,23 @@
                 echo '</div>';
                 echo '<br>';
             }
+            echo '</div>';
             echo '<div class="divCenter">';
-            if ($offset > 0) {
                 echo '<div>';
-                echo '<a href="ricerca.php?offset=' . 0 . '&manga=' . $manga . '">';
-                echo '<button><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
-                echo '</a>';
+                    echo '<button onclick="pclick(1)" id="firstPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
                 echo '</div>';
-            }
-            if ($offset - 10 >= 0) {
+
                 echo '<div>';
-                echo '<a href="ricerca.php?offset=' . $offset - 10 . '&manga=' . $manga . '">';
-                echo '<button><span class="material-symbols-outlined">chevron_left</span></button>';
-                echo '</a>';
+                    echo '<button onclick="pclick(2)" id="previousPage" style="display: block;"><span class="material-symbols-outlined">chevron_left</span></button>';
                 echo '</div>';
-            }
-            if ($offset + 10 < $total) {
+
                 echo '<div>';
-                echo '<a href="ricerca.php?offset=' . $offset + 10 . '&manga=' . $manga . '">';
-                echo '<button><span class="material-symbols-outlined">chevron_right</span></button>';
-                echo '</a>';
+                    echo '<button onclick="pclick(3)" id="nextPage" style="display: block;"><span class="material-symbols-outlined">chevron_right</span></button>';
                 echo '</div>';
-            }
-            if ($offset < $total - 10) {
+
                 echo '<div>';
-                echo '<a href="ricerca.php?offset=' . $total - 10 . '&manga=' . $manga . '">';
-                echo '<button><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
-                echo '</a>';
+                    echo '<button onclick="pclick(4)" id="lastPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
                 echo '</div>';
-            }
             echo '</div>';
         }
     } else {
