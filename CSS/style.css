@@ -11,6 +11,42 @@
     text-align: center;
 }
 
+.outer {
+    overflow: hidden;
+}
+
+.divPage {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: fixed;
+}
+
+.divCenterPage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+    height: max-content;
+}
+
+.divBtnLeft {
+    display: flex;
+    position: sticky;
+    justify-content: left;
+    text-align: left;
+}
+
+.divBtnRight {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    text-align: right;
+    vertical-align: middle;
+}
+
 .divDati {
     display: flex;
     border-radius: 10px;
@@ -45,8 +81,8 @@
 }
 
 .pages {
-    max-width: 50%;
-    max-height: 50%;
+    max-width: 37%;
+    max-height: 37%;
 }
 
 .material-symbols-outlined {

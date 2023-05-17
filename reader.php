@@ -62,6 +62,8 @@
         </form>
     </div>
         <?php
+        session_start();
+
         require __DIR__ . '/functions.php';
 
         if(isset($_GET['chapterId'])) {
@@ -75,17 +77,46 @@
             $pages = $chapter["chapter"]["dataSaver"];
 
             $baseUrl = 'https://uploads.mangadex.org/data-saver/' . $hash . '/';
-            for($i = 0; $i < count($pages); $i++) {
-                $url = $baseUrl . $pages[$i];
-                echo '<div class="divCenter">';
-                    echo '<img class="pages" src="' . $url . '" alt="' . 'Page No. ' . $i . '">';
+            $_SESSION['currentPage'] = 0;
+            $_SESSION['baseUrl'] = $baseUrl;
+            $_SESSION['pages'] = $pages;
+            $_SESSION['countPages'] = count($pages);
+            echo '<div class="divCenterPage">';
+                echo '<div class="divBtnLeft">
+                    <button class="btn btn-outline-primary" onclick="changePageReader(0)">Previous</button>
+                </div>';
+                $url = $baseUrl . $pages[0];
+                    echo '<div class="outer">';
+                        echo '<div id="divImg" class="divCenter">';
+                            echo '<img id="imgtag" class="pages" src="' . $url . '" alt="' . 'Page No. ' . '0' . '">';
+                        echo '</div>';
+                    echo '</div>';
+                    echo '<br>';
+                    echo '<br>';
+                /*
+                for($i = 0; $i < count($pages); $i++) {
+                    $url = $baseUrl . $pages[$i];
+                    echo '<div class="divCenter">';
+                        echo '<img class="pages" src="' . $url . '" alt="' . 'Page No. ' . $i . '">';
+                    echo '</div>';
+                    echo '<br>';
+                    echo '<div class="divCenter">';
+                        echo $i + 1 . '/' . count($pages);
+                    echo '</div>';
+                    echo '<br>';
+                }
+                */
+                echo '
+                <div class="divBtnRight">
+                    <button class="btn btn-outline-primary" onclick="changePageReader(1)">Next</button>
+                </div>';
+            echo '</div>';
+            echo '<div class="divCenter">';
+                echo '<div id="count" class="divCenter">';
+                    echo 0 + 1 . '/' . count($pages);
                 echo '</div>';
-                echo '<br>';
-                echo '<div class="divCenter">';
-                    echo $i + 1 . '/' . count($pages);
-                echo '</div>';
-                echo '<br>';
-            }
+            echo '</div>';
+                
         }
         else {
             header('Location:index.php');

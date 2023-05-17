@@ -59,12 +59,22 @@
                                     document.getElementById("selectLangChapter").value = lang;
                                 </script>
                             ';
+                                
+                                if(isset($_COOKIE['jwt'])){
+                                    echo '
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="logout.php">Logout</a>
+                                    </li>
+                                    ';
+                                }
+                                else{
+                                    echo '
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="login.php">Login</a>
+                                    </li>
+                                    ';
+                                }
                                 ?>
-                                <!-- needed later
-                                <li class="nav-item">
-                                    <a class="nav-link" href="logout.php">Logout</a>
-                                </li>
-                                -->
                             </ul>
                         </div>
                     </div>

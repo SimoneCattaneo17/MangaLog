@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <?php
+
+require __DIR__ . '/functions.php';
+
 session_start();
 session_destroy();
+
+if(isset($_POST['username'])){
+    
+}
 ?>
 <html>
 
@@ -39,6 +46,25 @@ session_destroy();
                                 <li class="nav-item">
                                     <a class="nav-link" href="chapters.php?search=ok&random=ok&offset=000&lang=en">Random</a>
                                 </li>
+                            </ul>
+
+                            <ul class="navbar-nav ms-auto">
+                                <?php
+                                    if(isset($_COOKIE['jwt'])){
+                                        echo '
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="logout.php">Logout</a>
+                                        </li>
+                                        ';
+                                    }
+                                    else{
+                                        echo '
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="login.php">Login</a>
+                                        </li>
+                                        ';
+                                    }
+                                ?>
                             </ul>
                         </div>
                     </div>

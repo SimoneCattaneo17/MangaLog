@@ -17,60 +17,10 @@
 </head>
 
 <body>
-    <div>
-        <form action="ricerca.php?offset=0&manga=null&lang=en" method="post">
-            <header>
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container-fluid">
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav me-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="index.php">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control form-control-sm" placeholder="Search..." aria-label="Search" aria-describedby="button-addon2" name="manga" autocomplete="off">
-                                        <button onclick="loading()" class="btn btn-outline-primary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
-                                    </div>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="chapters.php?search=ok&random=ok&offset=000&lang=en">Random</a>
-                                </li>
-                            </ul>
-
-                            <ul class="navbar-nav ms-auto">
-                                <?php
-                                $lines = file('./languages.txt');
-                                echo '<select id="selectLangChapter" class="form-select" onchange="languageChangeChapter()">';
-                                foreach ($lines as $line) {
-                                    $line = rtrim($line, "\n");
-                                    echo '<option value="' . $line . '">' . $line . '</option>';
-                                }
-                                echo '</select>';
-
-                                echo '
-                                <script>
-                                    var langIndex = localStorage.getItem("langIndex");
-                                    if (lang == null) {
-                                        lang = "en";
-                                    }
-                                    document.getElementById("selectLangChapter").value = lang;
-                                </script>
-                            ';
-                                ?>
-                                <!-- needed later
-                                <li class="nav-item">
-                                    <a class="nav-link" href="logout.php">Logout</a>
-                                </li>
-                                -->
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-            </header>
-        </form>
-    </div>
 <?php
+
+    require __DIR__ . '/functions.php';
+
     $ip = '127.0.0.1';
     $username = 'root';
     $pwd = '';
@@ -87,14 +37,11 @@
         if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
             $sql = "lock tables users write";
             $sql = "lock tables users read";
-            //$sql = "INSERT INTO users (email, username, pswd) VALUES ('".$_POST["email"]."', '".$_POST["username"]."', '".$_POST["pswd"]."')";
-            $sql = $connection -> prepare("INSERT INTO users (email, username, pswd) VALUES ('".$_POST["email"]."', '".$_POST["username"]."', '".$_POST["pswd"]."')");
-            /* per qualche motivo non va
+            $sql = $connection -> prepare("INSERT INTO users (email, username, pswd) VALUES (?, ?, ?)");
             $em = $_POST["email"];
             $un = $_POST["username"];
             $ps = $_POST["pswd"];
             $sql->bind_param("sss", $em, $un, $ps);
-            */
 
             $sql->execute();
             $sql->close();
@@ -107,19 +54,36 @@
 
     //login
     if(isset($_POST["username"]) && isset($_POST["pswd"]) && !isset($_POST["email"])) {
-        $_POST["pswd"] = md5($_POST["pswd"]); 
+        $pswd = md5($_POST["pswd"]);
         $sql = "lock tables users write";
-        $sql = "lock tables users read";  
-        $sql = "SELECT * FROM users WHERE username = '".$_POST["username"]."' AND pswd = '".$_POST["pswd"]."'";
+        $sql = "lock tables users read"; 
+        $sql = "SELECT * FROM users WHERE username = '".$_POST["username"]."' AND pswd = '".$pswd."'";
+        echo $sql;
         $result = $connection->query($sql);
         $sql = "unlock tables";
         if($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             session_start();
+            $header = array(
+                'alg' => 'HS256',
+                'typ' => 'JWT'
+            );
+            
+            $payload = array(
+                'username' => $row['username'],
+                'id' => $row['id'],
+            );
+            
+            $jwt = generate_jwt($header, $payload);
+
+            setcookie('jwt', $jwt, time() + (86400 * 30), "/");
+            
+            /*
             $_SESSION["username"] = $row["username"];
             $_SESSION["email"] = $row["email"];
             $_SESSION["pswd"] = $row["pswd"];
             $_SESSION["id"] = $row["id"];
+            */
             header("Location: index.php");
         }
     }
@@ -134,7 +98,7 @@
                             <h3 class="mb-5">Login</h3>
                         </div>
 
-                        <form method="POST" action="index.php">
+                        <form method="POST" action="login.php">
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="typeEmailX-2">Username:</label>
                                 <input type="text" name="username" id="typeUser-2" class="form-control form-control-lg" />

@@ -149,7 +149,7 @@ function changePage(id){
         },
         dataType: "json",
         success: function (response) {
-            if(response.data.length > 100) {
+            if(response.data.length >= 100) {
                 div = document.getElementById("capitoli");
                 div.innerHTML = "";
                 for(var i = 0; i < response.data.length; i++){
@@ -159,6 +159,26 @@ function changePage(id){
         },
         error: function (response) {
             console.log('error');
+        }
+    });
+}
+
+function changePageReader(a){
+    $.ajax({
+        type: "POST",
+        url: "./ajaxReader.php",
+        data: {
+            "buttonId": a
+        },
+        dataType: "json",
+        success: function (response) {
+            img = document.getElementById("imgtag");
+            img.src = response.url;
+            document.getElementById("count").innerHTML = "";
+            document.getElementById("count").innerHTML += (response.currentPage + 1) + "/" + response.totalPages;
+        },
+        error: function (response) {
+            console.log(response);
         }
     });
 }
