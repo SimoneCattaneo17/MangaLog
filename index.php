@@ -43,9 +43,15 @@ if(isset($_POST['username'])){
                                         <button class="btn btn-outline-primary" type="submit" id="button-addon2" onclick="loading()"><i class="fas fa-search"></i></button>
                                     </div>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="chapters.php?search=ok&random=ok&offset=000&lang=en">Random</a>
-                                </li>
+                                <?php
+                                    if(isset($_COOKIE['jwt'])){
+                                        echo '
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="chapters.php?search=ok&random=ok&offset=000&lang=en">Random</a>
+                                        </li>
+                                        ';
+                                    }
+                                ?>
                             </ul>
 
                             <ul class="navbar-nav ms-auto">

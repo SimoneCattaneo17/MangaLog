@@ -182,3 +182,34 @@ function changePageReader(a){
         }
     });
 }
+
+function addRemoveCollection(id, operation, userId){
+    $.ajax({
+        type: "POST",
+        url: "./ajaxCollection.php",
+        data: {
+            "mangaId": id,
+            "operation": operation,
+            "userId": userId.toString()
+        },
+        dataType: "text",
+        success: function (response) {
+            if(response == " added"){
+                document.getElementById("addRemove").innerHTML = "";
+                document.getElementById("addRemove").innerHTML += '<button class="btn btn-dark rounded-circle" onclick="addRemoveCollection(\'' + id + '\', \'remove\', \'' + userId + '\')"><i class="fas fa-bookmark"></i></button>';
+            }
+            else {
+                if(response == " removed"){
+                    document.getElementById("addRemove").innerHTML = "";
+                    document.getElementById("addRemove").innerHTML += '<button class="btn btn-dark rounded-circle" onclick="addRemoveCollection(\'' + id + '\', \'add\', \'' + userId + '\')"><i class="far fa-bookmark"></i></button>';
+                }
+                else {
+                    console.log('3');
+                }
+            }
+        },
+        error: function (response) {
+            console.log("we have a problem");
+        }
+    });
+}

@@ -7,6 +7,8 @@
 
 <body>
     <?php
+    require __DIR__ . '/functions.php';
+
     session_start();
     session_destroy();
     setcookie('jwt', '', time() - 3600, '/');

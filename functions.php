@@ -20,6 +20,22 @@ function apiCall(string $url): array {
     return $result;
 }
 
+function connect($sql){
+    $ip = '127.0.0.1';
+    $username = 'root';
+    $pwd = '';
+    $database = 'mangalog';
+    $connection = new mysqli($ip, $username, $pwd, $database);
+
+    if($connection->connect_error) {
+        die('C/errore: ' . $connection->connect_error);
+    }
+
+    $result = $connection->query($sql);
+
+    return $result;
+}
+
 function generate_jwt($headers, $payload, $secret = 'MangaLog') {
 	$headers_encoded = base64url_encode(json_encode($headers));
 	
@@ -37,9 +53,54 @@ function base64url_encode($str) {
     return rtrim(strtr(base64_encode($str), '+/', '-_'), '=');
 }
 
+function is_jwt_valid($jwt, $secret = 'MangaLog') {
+	// split the jwt
+	$tokenParts = explode('.', $jwt);
+	$header = base64_decode($tokenParts[0]);
+	$payload = base64_decode($tokenParts[1]);
+	$signature_provided = $tokenParts[2];
+
+	// check the expiration time - note this will cause an error if there is no 'exp' claim in the jwt
+	$expiration = json_decode($payload)->exp;
+	$is_token_expired = ($expiration - time()) < 0;
+
+	// build a signature based on the header and payload using the secret
+	$base64_url_header = base64url_encode($header);
+	$base64_url_payload = base64url_encode($payload);
+	$signature = hash_hmac('SHA256', $base64_url_header . "." . $base64_url_payload, $secret, true);
+	$base64_url_signature = base64url_encode($signature);
+
+	// verify it matches the signature provided in the jwt
+	$is_signature_valid = ($base64_url_signature === $signature_provided);
+	
+	if ($is_token_expired || !$is_signature_valid) {
+		return FALSE;
+	} else {
+		return TRUE;
+	}
+}
+
+function get_jwt_payload($jwt) {
+    $tokenParts = explode('.', $jwt);
+    $payload = base64_decode($tokenParts[1]);
+    return json_decode($payload, true);
+}
+
+function get_jwt_id($jwt) {
+    $payload = get_jwt_payload($jwt);
+    return $payload['id'];
+}
+
+function get_jwt_username($jwt) {
+    $payload = get_jwt_payload($jwt);
+    return $payload['username'];
+}
+
 //don't know if this is needed
+/*
 function base64url_decode($str) {
     return base64_decode(strtr($str, '-_', '+/').str_repeat('=', 3 - ( 3 + strlen($str)) % 4));
 }
+*/
 
 ?>

@@ -58,7 +58,6 @@
         $sql = "lock tables users write";
         $sql = "lock tables users read"; 
         $sql = "SELECT * FROM users WHERE username = '".$_POST["username"]."' AND pswd = '".$pswd."'";
-        echo $sql;
         $result = $connection->query($sql);
         $sql = "unlock tables";
         if($result->num_rows > 0) {
@@ -72,10 +71,11 @@
             $payload = array(
                 'username' => $row['username'],
                 'id' => $row['id'],
+                'exp' => (time() + (86400 * 30)),
             );
             
             $jwt = generate_jwt($header, $payload);
-
+            
             setcookie('jwt', $jwt, time() + (86400 * 30), "/");
             
             /*
