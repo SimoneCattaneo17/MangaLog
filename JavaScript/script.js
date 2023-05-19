@@ -52,28 +52,8 @@ function languageChangeChapter(){
     window.location.href = newUrl;
 }
 
-/*
-function loading(){
-    document.getElementById("overlay").style.opacity = 0.5;
-    document.getElementById("loader").className = "spinner-border";
-    spinnerOn = true;
-}
-
-function pageLoad(){
-    if(spinnerOn){
-        document.getElementById("overlay").style.opacity = 0;
-        document.getElementById("loader").className = "";
-        spinnerOn = false;
-    }
-}
-*/
-
 async function dataLoad(response) {
-    console.log(response);
     mangas = response;
-    for(var h = 0; h < mangas.data.length; h++){
-        console.log(mangas.data[h].attributes.title.en);
-    }
     for(j = 0; j < mangas.data.length; j++){
         for(var i = 0; i < mangas.data[i].relationships.length; i++){
             if(mangas.data[j].relationships[i].type == "cover_art"){
@@ -82,7 +62,6 @@ async function dataLoad(response) {
             }
         }
         mangaId = mangas.data[j].id;
-        console.log('prima di await');
         await $.ajax({
             type: "POST",
             url: "./ajaxCovers.php",
@@ -91,8 +70,6 @@ async function dataLoad(response) {
             },
             dataType: "json",
             success: function (response) {
-                console.log(j);
-                //console.log(response);
                 cover = response;
                 var imgFilename = cover.data.attributes.fileName;
                 var sendUrl = 'chapters.php?search=ok&Id=' + mangaId + '&title=' + mangas.data[j].attributes.title.en + '&cover=' + imgFilename + '&lang=en&offset=000';
@@ -115,6 +92,7 @@ async function dataLoad(response) {
                 container.innerHTML += '\n<br>'
             },
             error: function (response) {
+                console.log("error\n");
                 console.log(response);
             }
         });
@@ -135,7 +113,8 @@ function pclick(id){
             dataLoad(response);
         },
         error: function (response) {
-            console.log('error');
+            console.log('error\n');
+            console.log(response);
         }
     });
 }
@@ -158,7 +137,8 @@ function changePage(id){
             }
         },
         error: function (response) {
-            console.log('error');
+            console.log('error\n');
+            console.log(response);
         }
     });
 }
@@ -178,6 +158,7 @@ function changePageReader(a){
             document.getElementById("count").innerHTML += (response.currentPage + 1) + "/" + response.totalPages;
         },
         error: function (response) {
+            console.log('error\n');
             console.log(response);
         }
     });
@@ -204,12 +185,12 @@ function addRemoveCollection(id, operation, userId){
                     document.getElementById("addRemove").innerHTML += '<button class="btn btn-dark rounded-circle" onclick="addRemoveCollection(\'' + id + '\', \'add\', \'' + userId + '\')"><i class="far fa-bookmark"></i></button>';
                 }
                 else {
-                    console.log('3');
+                    alert("Errore nell'aggiunta/rimozione dalla collezione");
                 }
             }
         },
         error: function (response) {
-            console.log("we have a problem");
+            console.log("we have an error\n");
         }
     });
 }

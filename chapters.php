@@ -143,19 +143,30 @@
                 echo '<br>';
 
                 echo '<div class="divCenter" style="padding-top: 10%" id="addRemove">';
+                    $ip = '127.0.0.1';
+                    $username = 'root';
+                    $pwd = '';
+                    $database = 'mangalog';
+                    $connection = new mysqli($ip, $username, $pwd, $database);
+                
+                    if($connection->connect_error) {
+                        die('C/errore: ' . $connection->connect_error);
+                    }
+
+                    $sql = "LOCK TABLES usercollection WRITE";
+                    $connection->query($sql);
+                    $sql = "LOCK TABLES usercollection READ"; 
+                    $connection->query($sql);
                     $sql = "SELECT * FROM usercollection WHERE idManga = '".$_SESSION['Id']."' AND idUtente = '".get_jwt_id($_COOKIE['jwt'])."'";
                     $result = connect($sql);
+                    $sql = "UNLOCK TABLES";
+                    $connection->query($sql);
                     if($result->num_rows > 0){
                         echo '<button type="button" class="btn btn-dark rounded-circle" onclick="addRemoveCollection(\''.$_SESSION['Id'].'\', \'remove\', ' .get_jwt_id($_COOKIE['jwt']).')"><i class="fas fa-bookmark"></i></button>';
                     }
                     else{
                         echo '<button type="button" class="btn btn-dark rounded-circle" onclick="addRemoveCollection(\''.$_SESSION['Id'].'\', \'add\', ' .get_jwt_id($_COOKIE['jwt']).')"><i class="far fa-bookmark"></i></button>';
                     }
-
-                    //filled
-                    //echo '<button type="button" class="btn btn-dark rounded-circle"><i class="fas fa-bookmark"></i></button>';
-                    //outlined
-                    //echo '<button type="button" class="btn btn-dark rounded-circle"><i class="far fa-bookmark"></i></button>';
                 echo '</div>';
             
                 //bottoni cambio pagina

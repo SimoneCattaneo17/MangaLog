@@ -35,8 +35,6 @@
     if(isset($_POST["email"]) && isset($_POST["username"]) && isset($_POST["pswd"])) {
         $_POST["pswd"] = md5($_POST["pswd"]);
         if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-            $sql = "lock tables users write";
-            $sql = "lock tables users read";
             $sql = $connection -> prepare("INSERT INTO users (email, username, pswd) VALUES (?, ?, ?)");
             $em = $_POST["email"];
             $un = $_POST["username"];
@@ -45,7 +43,6 @@
 
             $sql->execute();
             $sql->close();
-            $sql = "unlock tables";
         }
         else {
             header("Location: signUp.php?error=1");
@@ -55,11 +52,14 @@
     //login
     if(isset($_POST["username"]) && isset($_POST["pswd"]) && !isset($_POST["email"])) {
         $pswd = md5($_POST["pswd"]);
-        $sql = "lock tables users write";
-        $sql = "lock tables users read"; 
+        $sql = "LOCK TABLES users WRITE";
+        $connection->query($sql);
+        $sql = "LOCK TABLES users READ"; 
+        $connection->query($sql);
         $sql = "SELECT * FROM users WHERE username = '".$_POST["username"]."' AND pswd = '".$pswd."'";
         $result = $connection->query($sql);
-        $sql = "unlock tables";
+        $sql = "UNLOCK TABLES";
+        $connection->query($sql);
         if($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             session_start();

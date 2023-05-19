@@ -94,20 +94,20 @@
         } 
         else {
             echo '<div class="divCenter">';
-                echo '<div>';
-                    echo '<button onclick="pclick(1)" id="firstPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
+                echo '<div style="padding: 2px">';
+                    echo '<button class="btn btn-dark rounded" onclick="pclick(1)" id="firstPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
                 echo '</div>';
 
-                echo '<div>';
-                    echo '<button onclick="pclick(2)" id="previousPage" style="display: block;"><span class="material-symbols-outlined">chevron_left</span></button>';
+                echo '<div style="padding: 2px">';
+                    echo '<button class="btn btn-dark rounded" onclick="pclick(2)" id="previousPage" style="display: block;"><span class="material-symbols-outlined">chevron_left</span></button>';
                 echo '</div>';
 
-                echo '<div>';
-                    echo '<button onclick="pclick(3)" id="nextPage" style="display: block;"><span class="material-symbols-outlined">chevron_right</span></button>';
+                echo '<div style="padding: 2px">';
+                    echo '<button class="btn btn-dark rounded" onclick="pclick(3)" id="nextPage" style="display: block;"><span class="material-symbols-outlined">chevron_right</span></button>';
                 echo '</div>';
 
-                echo '<div>';
-                    echo '<button onclick="pclick(4)" id="lastPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
+                echo '<div style="padding: 2px">';
+                    echo '<button class="btn btn-dark rounded" onclick="pclick(4)" id="lastPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
                 echo '</div>';
             echo '</div>';
             echo '<div id="container">';
@@ -147,20 +147,20 @@
             }
             echo '</div>';
             echo '<div class="divCenter">';
-                echo '<div>';
-                    echo '<button onclick="pclick(1)" id="firstPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
+                echo '<div style="padding: 2px">';
+                    echo '<button class="btn btn-dark rounded" onclick="pclick(1)" id="firstPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
                 echo '</div>';
 
-                echo '<div>';
-                    echo '<button onclick="pclick(2)" id="previousPage" style="display: block;"><span class="material-symbols-outlined">chevron_left</span></button>';
+                echo '<div style="padding: 2px">';
+                    echo '<button class="btn btn-dark rounded" onclick="pclick(2)" id="previousPage" style="display: block;"><span class="material-symbols-outlined">chevron_left</span></button>';
                 echo '</div>';
 
-                echo '<div>';
-                    echo '<button onclick="pclick(3)" id="nextPage" style="display: block;"><span class="material-symbols-outlined">chevron_right</span></button>';
+                echo '<div style="padding: 2px">';
+                    echo '<button class="btn btn-dark rounded" onclick="pclick(3)" id="nextPage" style="display: block;"><span class="material-symbols-outlined">chevron_right</span></button>';
                 echo '</div>';
 
-                echo '<div>';
-                    echo '<button onclick="pclick(4)" id="lastPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
+                echo '<div style="padding: 2px">';
+                    echo '<button class="btn btn-dark rounded" onclick="pclick(4)" id="lastPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
                 echo '</div>';
             echo '</div>';
         }

@@ -17,59 +17,6 @@
 </head>
 
 <body>
-<div>
-        <form action="ricerca.php?offset=0&manga=null&lang=en" method="post">
-            <header>
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container-fluid">
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav me-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="index.php">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control form-control-sm" placeholder="Search..." aria-label="Search" aria-describedby="button-addon2" name="manga" autocomplete="off">
-                                        <button onclick="loading()" class="btn btn-outline-primary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
-                                    </div>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="chapters.php?search=ok&random=ok&offset=000&lang=en">Random</a>
-                                </li>
-                            </ul>
-
-                            <ul class="navbar-nav ms-auto">
-                                <?php
-                                $lines = file('./languages.txt');
-                                echo '<select id="selectLangChapter" class="form-select" onchange="languageChangeChapter()">';
-                                foreach ($lines as $line) {
-                                    $line = rtrim($line, "\n");
-                                    echo '<option value="' . $line . '">' . $line . '</option>';
-                                }
-                                echo '</select>';
-
-                                echo '
-                                <script>
-                                    var langIndex = localStorage.getItem("langIndex");
-                                    if (lang == null) {
-                                        lang = "en";
-                                    }
-                                    document.getElementById("selectLangChapter").value = lang;
-                                </script>
-                            ';
-                                ?>
-                                <!-- needed later
-                                <li class="nav-item">
-                                    <a class="nav-link" href="logout.php">Logout</a>
-                                </li>
-                                -->
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-            </header>
-        </form>
-    </div>
 <?php
     if(isset($_GET['error']) && $_GET['error'] == '1') {
         echo '
