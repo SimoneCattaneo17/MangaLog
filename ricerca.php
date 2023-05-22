@@ -17,7 +17,7 @@
 
 <body class="body">
     <div>
-        <form action="ricerca.php?offset=0&manga=null&lang=en" method="post">
+        <form action="ricerca.php?offset=0&lang=en" method="post">
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container-fluid">
@@ -49,6 +49,22 @@
                                     echo '</select>';
                                 }
                                 ?>
+                                <?php
+                                    if(isset($_COOKIE['jwt'])){
+                                        echo '
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="logout.php">Logout</a>
+                                        </li>
+                                        ';
+                                    }
+                                    else{
+                                        echo '
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="login.php">Login</a>
+                                        </li>
+                                        ';
+                                    }
+                                ?>
                                 <!-- needed later
                                 <li class="nav-item">
                                     <a class="nav-link" href="logout.php">Logout</a>
@@ -68,14 +84,18 @@
     require __DIR__ . '/functions.php';
 
     $lang = "en";
-    if (isset($_GET['offset'])) {
+    if (isset($_POST['manga'])) {
 
         $offset = $_GET['offset'];
-        $manga = $_GET['manga'];
-        if ($manga == "null") {
+        if (isset($_POST['manga'])) {
             $manga = $_POST["manga"];
         } else {
-            $manga = $_GET['manga'];
+            if(isset($_SESSION['manga'])) {
+                $manga = $_SESSION['manga'];
+            }
+            else{
+                $manga = "";
+            }
         }
         $_SESSION['manga'] = $manga;
         $_SESSION['offset'] = $offset;
@@ -145,6 +165,7 @@
                 echo '</div>';
                 echo '<br>';
             }
+            
             echo '</div>';
             echo '<div class="divCenter">';
                 echo '<div style="padding: 2px">';

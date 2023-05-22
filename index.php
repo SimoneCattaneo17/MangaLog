@@ -28,7 +28,7 @@ if(isset($_POST['username'])){
 <body class="body" id="body">
 
     <div>
-        <form id="form" action="ricerca.php?offset=0&manga=null&lang=en" method="post">
+        <form id="form" action="ricerca.php?offset=0&lang=en" method="post">
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container-fluid">

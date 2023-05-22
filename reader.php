@@ -16,7 +16,7 @@
     </head>
     <body class="body">
     <div id="overlay">
-        <form action="ricerca.php?offset=0&manga=null&lang=en" method="post">
+        <form action="ricerca.php?offset=0&lang=en" method="post">
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container-fluid">
@@ -49,11 +49,23 @@
                                 </script>
                             ';
                                 ?>
-                                <!--
-                                <li class="nav-item">
-                                    <a class="nav-link" href="logout.php">Logout</a>
-                                </li>
-                                -->
+
+                                <?php
+                                    if(isset($_COOKIE['jwt'])){
+                                        echo '
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="logout.php">Logout</a>
+                                        </li>
+                                        ';
+                                    }
+                                    else{
+                                        echo '
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="login.php">Login</a>
+                                        </li>
+                                        ';
+                                    }
+                                ?>
                             </ul>
                         </div>
                     </div>
