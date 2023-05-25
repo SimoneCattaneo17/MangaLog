@@ -17,7 +17,7 @@
 
 <body class="body">
     <div>
-        <form action="ricerca.php?offset=0&lang=en" method="post">
+        <form action="ricerca.php" method="post">
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container-fluid">
@@ -32,44 +32,33 @@
                                         <button onclick="loading()" class="btn btn-outline-primary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                                     </div>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="chapters.php?search=ok&random=ok&offset=000&lang=en">Random</a>
-                                </li>
-                            </ul>
-
-                            <ul class="navbar-nav ms-auto">
-                                <?php
-                                if (isset($_GET['offset'])) {
-                                    $lines = file('./languages.txt');
-                                    echo '<select id="selectLang" class="form-select" onchange="languageChange()">';
-                                    foreach ($lines as $line) {
-                                        $line = rtrim($line, "\n");
-                                        echo '<option value="' . $line . '">' . $line . '</option>';
-                                    }
-                                    echo '</select>';
-                                }
-                                ?>
                                 <?php
                                     if(isset($_COOKIE['jwt'])){
                                         echo '
                                         <li class="nav-item">
-                                            <a class="nav-link" href="logout.php">Logout</a>
-                                        </li>
-                                        ';
-                                    }
-                                    else{
-                                        echo '
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="login.php">Login</a>
+                                            <a class="nav-link" href="chapters.php?random=ok">Random</a>
                                         </li>
                                         ';
                                     }
                                 ?>
-                                <!-- needed later
-                                <li class="nav-item">
-                                    <a class="nav-link" href="logout.php">Logout</a>
-                                </li>
-                                -->
+                            </ul>
+
+                            <ul class="navbar-nav ms-auto">
+                                <?php
+                                if (isset($_COOKIE['jwt'])) {
+                                    echo '
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="logout.php">Logout</a>
+                                        </li>
+                                        ';
+                                } else {
+                                    echo '
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="login.php">Login</a>
+                                        </li>
+                                        ';
+                                }
+                                ?>
                             </ul>
                         </div>
                     </div>
@@ -84,110 +73,102 @@
     require __DIR__ . '/functions.php';
 
     $lang = "en";
+
     if (isset($_POST['manga'])) {
-
-        $offset = $_GET['offset'];
-        if (isset($_POST['manga'])) {
-            $manga = $_POST["manga"];
-        } else {
-            if(isset($_SESSION['manga'])) {
-                $manga = $_SESSION['manga'];
-            }
-            else{
-                $manga = "";
-            }
-        }
-        $_SESSION['manga'] = $manga;
-        $_SESSION['offset'] = $offset;
-        $_SESSION['lang'] = $lang;
-        $url = 'https://api.mangadex.org/manga?title=' . str_replace(' ', '%20', $manga) . '&offset=' . $offset;
-        
-        $mangas = apiCall($url);
-
-        $total = $mangas["total"];
-        $_SESSION['total'] = $total;
-
-        $coverId = "";
-
-        if (count($mangas["data"]) == 0) {
-            echo '<h1>La ricerca non ha dato risultati</h1>';
-        } 
-        else {
-            echo '<div class="divCenter">';
-                echo '<div style="padding: 2px">';
-                    echo '<button class="btn btn-dark rounded" onclick="pclick(1)" id="firstPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
-                echo '</div>';
-
-                echo '<div style="padding: 2px">';
-                    echo '<button class="btn btn-dark rounded" onclick="pclick(2)" id="previousPage" style="display: block;"><span class="material-symbols-outlined">chevron_left</span></button>';
-                echo '</div>';
-
-                echo '<div style="padding: 2px">';
-                    echo '<button class="btn btn-dark rounded" onclick="pclick(3)" id="nextPage" style="display: block;"><span class="material-symbols-outlined">chevron_right</span></button>';
-                echo '</div>';
-
-                echo '<div style="padding: 2px">';
-                    echo '<button class="btn btn-dark rounded" onclick="pclick(4)" id="lastPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
-                echo '</div>';
-            echo '</div>';
-            echo '<div id="container">';
-            for ($j = 0; $j < count($mangas["data"]); $j = $j + 1) {
-                for ($i = 0; $i < count($mangas["data"][$j]["relationships"]); $i = $i + 1) {
-                    if ($mangas["data"][$j]["relationships"][$i]["type"] == "cover_art") {
-                        $coverId = $mangas["data"][$j]["relationships"][$i]["id"];
-                        break;
-                    }
-                }
-                $mangaId = $mangas["data"][$j]["id"];
-
-                $url = 'https://api.mangadex.org/cover/' . $coverId;
-
-                $cover = apiCall($url);
-
-                $imgFilename = $cover["data"]["attributes"]["fileName"];
-
-                $sendUrl = 'chapters.php?search=ok&Id=' . $mangaId . '&title=' . $mangas["data"][$j]["attributes"]["title"]["en"] . '&cover=' . $imgFilename . '&lang=' . $lang . '&offset=000';
-
-                echo '<div class="divDati" id="divDati">';
-                echo '<div class="divCover" id="divCover">';
-                echo '<a onclick="loading()" ' . 'id="' . $j . '" href="' . $sendUrl . '"><img class="cover" src="https://uploads.mangadex.org/covers/' . $mangaId . '/' . $imgFilename . '.256.jpg" alt="cover art" /></a>';
-                echo '</div>';
-
-                echo '<div class="divScritte" id="divScritte">';
-                echo '<h3>' . $mangas["data"][$j]["attributes"]["title"]["en"] . '</h3>' . '<br>';
-                if(isset($mangas["data"][$j]["attributes"]["description"]["en"]) && $mangas["data"][$j]["attributes"]["description"]["en"] != "") {
-                    echo substr($mangas["data"][$j]["attributes"]["description"]["en"], 0, 150) . '...' . '<br>';
-                }
-                else {
-                    echo 'No description available';
-                }
-                echo '</div>';
-                echo '</div>';
-                echo '<br>';
-            }
-            
-            echo '</div>';
-            echo '<div class="divCenter">';
-                echo '<div style="padding: 2px">';
-                    echo '<button class="btn btn-dark rounded" onclick="pclick(1)" id="firstPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
-                echo '</div>';
-
-                echo '<div style="padding: 2px">';
-                    echo '<button class="btn btn-dark rounded" onclick="pclick(2)" id="previousPage" style="display: block;"><span class="material-symbols-outlined">chevron_left</span></button>';
-                echo '</div>';
-
-                echo '<div style="padding: 2px">';
-                    echo '<button class="btn btn-dark rounded" onclick="pclick(3)" id="nextPage" style="display: block;"><span class="material-symbols-outlined">chevron_right</span></button>';
-                echo '</div>';
-
-                echo '<div style="padding: 2px">';
-                    echo '<button class="btn btn-dark rounded" onclick="pclick(4)" id="lastPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
-                echo '</div>';
-            echo '</div>';
-        }
+        $manga = $_POST["manga"];
     } else {
-        header('Location:index.php');
+        if (isset($_SESSION['manga'])) {
+            $manga = $_SESSION['manga'];
+        } else {
+            $manga = "";
+        }
     }
+    $_SESSION['manga'] = $manga;
+    $_SESSION['lang'] = $lang;
+    $url = 'https://api.mangadex.org/manga?title=' . str_replace(' ', '%20', $manga);
+
+    $mangas = apiCall($url);
+
+    $total = $mangas["total"];
+    $_SESSION['total'] = $total;
+
+    $coverId = "";
+
+    if (count($mangas["data"]) == 0) {
+        echo '<h1>La ricerca non ha dato risultati</h1>';
+    } else {
+        echo '<div class="divCenter">';
+        echo '<div style="padding: 2px">';
+        echo '<button class="btn btn-dark rounded" onclick="pclick(1)" id="firstPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
+        echo '</div>';
+
+        echo '<div style="padding: 2px">';
+        echo '<button class="btn btn-dark rounded" onclick="pclick(2)" id="previousPage" style="display: block;"><span class="material-symbols-outlined">chevron_left</span></button>';
+        echo '</div>';
+
+        echo '<div style="padding: 2px">';
+        echo '<button class="btn btn-dark rounded" onclick="pclick(3)" id="nextPage" style="display: block;"><span class="material-symbols-outlined">chevron_right</span></button>';
+        echo '</div>';
+
+        echo '<div style="padding: 2px">';
+        echo '<button class="btn btn-dark rounded" onclick="pclick(4)" id="lastPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
+        echo '</div>';
+        echo '</div>';
+        echo '<div id="container">';
+        for ($j = 0; $j < count($mangas["data"]); $j = $j + 1) {
+            for ($i = 0; $i < count($mangas["data"][$j]["relationships"]); $i = $i + 1) {
+                if ($mangas["data"][$j]["relationships"][$i]["type"] == "cover_art") {
+                    $coverId = $mangas["data"][$j]["relationships"][$i]["id"];
+                    break;
+                }
+            }
+            $mangaId = $mangas["data"][$j]["id"];
+
+            $url = 'https://api.mangadex.org/cover/' . $coverId;
+
+            $cover = apiCall($url);
+
+            $imgFilename = $cover["data"]["attributes"]["fileName"];
+
+            $sendUrl = 'chapters.php?Id=' . $mangaId . '&title=' . $mangas["data"][$j]["attributes"]["title"]["en"] . '&cover=' . $imgFilename . '&lang=' . $lang;
+
+            echo '<div class="divDati" id="divDati">';
+            echo '<div class="divCover" id="divCover">';
+            echo '<a onclick="loading()" ' . 'id="' . $j . '" href="' . $sendUrl . '"><img class="cover" src="https://uploads.mangadex.org/covers/' . $mangaId . '/' . $imgFilename . '.256.jpg" alt="cover art" /></a>';
+            echo '</div>';
+
+            echo '<div class="divScritte" id="divScritte">';
+            echo '<h3>' . $mangas["data"][$j]["attributes"]["title"]["en"] . '</h3>' . '<br>';
+            if (isset($mangas["data"][$j]["attributes"]["description"]["en"]) && $mangas["data"][$j]["attributes"]["description"]["en"] != "") {
+                echo substr($mangas["data"][$j]["attributes"]["description"]["en"], 0, 150) . '...' . '<br>';
+            } else {
+                echo 'No description available';
+            }
+            echo '</div>';
+            echo '</div>';
+            echo '<br>';
+        }
+
+        echo '</div>';
+        echo '<div class="divCenter">';
+        echo '<div style="padding: 2px">';
+        echo '<button class="btn btn-dark rounded" onclick="pclick(1)" id="firstPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_left</span></button>';
+        echo '</div>';
+
+        echo '<div style="padding: 2px">';
+        echo '<button class="btn btn-dark rounded" onclick="pclick(2)" id="previousPage" style="display: block;"><span class="material-symbols-outlined">chevron_left</span></button>';
+        echo '</div>';
+
+        echo '<div style="padding: 2px">';
+        echo '<button class="btn btn-dark rounded" onclick="pclick(3)" id="nextPage" style="display: block;"><span class="material-symbols-outlined">chevron_right</span></button>';
+        echo '</div>';
+
+        echo '<div style="padding: 2px">';
+        echo '<button class="btn btn-dark rounded" onclick="pclick(4)" id="lastPage" style="display: block;"><span class="material-symbols-outlined">keyboard_double_arrow_right</span></button>';
+        echo '</div>';
+        echo '</div>';
+    }
+
     ?>
 
     <script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>

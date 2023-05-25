@@ -3,16 +3,11 @@ authentication (session/cookie): https://stackoverflow.com/questions/41921048/ho
 filter_var: nel login - https://www.stechies.com/php-filtervar/#:~:text=filter_var()%20is%20a%20PHP,email%20id%2C%20IP%20address%20etc.
 prepared statement: https://www.php.net/manual/en/mysqli.quickstart.prepared-statements.php
 
-non collegarsi al database con root
-
-data.attributes.availableTranslatedLanguages: vedere se usarlo per le lingue invece del file
-
 ricerca via tag
 
 novità: vedere se mangadex da la possibilità di mostrare capitoli appena caricati
 
 lettura offline: vedere se è possibile scaricare i capitoli e salvarli in locale
-commenti: dopo api perchè quelli di mangadex non sono accessibili da api (sembra), possibile mettere il link ai commenti di mangadex e allo stesso tempo mostrare quelli miei
 
 
 

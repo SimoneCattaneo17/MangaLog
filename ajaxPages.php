@@ -5,6 +5,10 @@
 
     require __DIR__ . '/functions.php';
 
+    if(!isset($_SESSION['offset'])) {
+        $_SESSION['offset'] = 0;
+    }
+
     switch($_POST["buttonId"]){
         case 1:
             $_SESSION['offset'] = 0;

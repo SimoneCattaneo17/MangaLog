@@ -28,7 +28,7 @@ if(isset($_POST['username'])){
 <body class="body" id="body">
 
     <div>
-        <form id="form" action="ricerca.php?offset=0&lang=en" method="post">
+        <form id="form" action="ricerca.php" method="post">
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container-fluid">
@@ -47,7 +47,7 @@ if(isset($_POST['username'])){
                                     if(isset($_COOKIE['jwt'])){
                                         echo '
                                         <li class="nav-item">
-                                            <a class="nav-link" href="chapters.php?search=ok&random=ok&offset=000&lang=en">Random</a>
+                                            <a class="nav-link" href="chapters.php?random=ok">Random</a>
                                         </li>
                                         ';
                                     }
@@ -84,8 +84,8 @@ if(isset($_POST['username'])){
                 $userId = get_jwt_id($jwt);
                 
                 $ip = '127.0.0.1';
-                $username = 'root';
-                $pwd = '';
+                $username = 'mangalog';
+                $pwd = 'mangalogUser';
                 $database = 'mangalog';
                 $connection = new mysqli($ip, $username, $pwd, $database);
 

@@ -16,7 +16,7 @@
     </head>
     <body class="body">
     <div id="overlay">
-        <form action="ricerca.php?offset=0&lang=en" method="post">
+        <form action="ricerca.php" method="post">
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container-fluid">
@@ -31,9 +31,15 @@
                                         <button onclick="loading()" class="btn btn-outline-primary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                                     </div>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="chapters.php?search=ok&random=ok&lang=en">Random</a>
-                                </li>
+                                <?php
+                                    if(isset($_COOKIE['jwt'])){
+                                        echo '
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="chapters.php?random=ok">Random</a>
+                                        </li>
+                                        ';
+                                    }
+                                ?>
                             </ul>
 
                             <ul class="navbar-nav ms-auto">

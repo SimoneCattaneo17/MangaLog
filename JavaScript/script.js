@@ -72,7 +72,7 @@ async function dataLoad(response) {
             success: function (response) {
                 cover = response;
                 var imgFilename = cover.data.attributes.fileName;
-                var sendUrl = 'chapters.php?search=ok&Id=' + mangaId + '&title=' + mangas.data[j].attributes.title.en + '&cover=' + imgFilename + '&lang=en&offset=000';
+                var sendUrl = 'chapters.php?Id=' + mangaId + '&title=' + mangas.data[j].attributes.title.en + '&cover=' + imgFilename;
                 var container = document.getElementById("container");
                 container.innerHTML += '<div class="divDati" id="divDati' + j + '">';
                 document.getElementById("divDati" + j).innerHTML += '<div class="divCover" id="divCover' + j + '">';

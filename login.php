@@ -16,19 +16,31 @@
     <link rel="icon" href="./IMG/icon.jpg">
 </head>
 
-<body>
+<body class="log">
 <?php
 
     require __DIR__ . '/functions.php';
 
     $ip = '127.0.0.1';
-    $username = 'root';
-    $pwd = '';
+    $username = 'mangalog';
+    $pwd = 'mangalogUser';
     $database = 'mangalog';
     $connection = new mysqli($ip, $username, $pwd, $database);
 
     if($connection->connect_error) {
         die('C/errore: ' . $connection->connect_error);
+    }
+
+    //change password
+    if(isset($_POST["pswd"]) && isset($_POST["pswdCnfrm"]) && isset($_POST["username"])) {
+        if($_POST["pswd"] == $_POST["pswdCnfrm"]) {
+            $pswd = md5($_POST["pswd"]);
+            $sql = "UPDATE users SET pswd = '".$pswd."' WHERE username = '".$_POST["username"]."'";
+            $connection->query($sql);
+        }
+        else {
+            header("Location: passwordReset.php?error=1");
+        }
     }
 
     //sign up
@@ -77,13 +89,6 @@
             $jwt = generate_jwt($header, $payload);
             
             setcookie('jwt', $jwt, time() + (86400 * 30), "/");
-            
-            /*
-            $_SESSION["username"] = $row["username"];
-            $_SESSION["email"] = $row["email"];
-            $_SESSION["pswd"] = $row["pswd"];
-            $_SESSION["id"] = $row["id"];
-            */
             header("Location: index.php");
         }
     }
@@ -113,6 +118,12 @@
                                 <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
                             </div>
                         </form>
+
+                        <br>
+
+                        <div class="text-center">
+                            <a href="passwordReset.php">Password dimenticata?</a>
+                        </div>
 
                         <br>
 

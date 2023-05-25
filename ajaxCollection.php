@@ -6,8 +6,8 @@
     require __DIR__ . '/functions.php';
 
     $ip = '127.0.0.1';
-    $username = 'root';
-    $pwd = '';
+    $username = 'mangalog';
+    $pwd = 'mangalogUser';
     $database = 'mangalog';
     $connection = new mysqli($ip, $username, $pwd, $database);
 

@@ -16,7 +16,7 @@
     <link rel="icon" href="./IMG/icon.jpg">
 </head>
 
-<body>
+<body class="log">
 <?php
     if(isset($_GET['error']) && $_GET['error'] == '1') {
         echo '
